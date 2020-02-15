@@ -1,0 +1,12 @@
+
+VS -> Tools -> NuGet Package Manager -> Package Manager Console <run>
+
+Console:
+
+PM> 
+
+---------------------
+
+Search needed Package in https://www.nuget.org/
+
+PM> Install-Package LiteDB -Version 5.0.2

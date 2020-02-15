@@ -5,8 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestStudent"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Test Students" MinHeight="600" Height="600" MinWidth="700" Width="700">
     <Grid>
-        
+        <Grid.Background>
+            <ImageBrush ImageSource="C:\Users\Vladimir\source\repos\TestStudent\TestStudent\Images\test01.jpg"/>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Frame x:Name="MainFrame" VerticalAlignment="Center"
+               Grid.Row="1"
+               NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
