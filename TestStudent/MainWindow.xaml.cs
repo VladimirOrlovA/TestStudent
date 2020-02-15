@@ -50,13 +50,16 @@ namespace TestStudent
                 var firstStart = new PageAuthorisation();
                 Label firstMessage = new Label()
                 {
-                    Content = "Первый запуск программы! \nсоздание учетной записи администратора",
-                    FontSize = 30,
-                    Foreground = new SolidColorBrush(Colors.Lime),
-                    Background = new SolidColorBrush(Colors.Black)
+                    Content = "Первый запуск программы! \nсоздание учетной записи администратора\n\n",
+                    FontSize = 25,
+                    Foreground = new SolidColorBrush(Colors.Black),
+                    Background = new SolidColorBrush(Colors.White)
                 };
 
+                firstStart.SpPageAuthorisation.Children.Clear();
                 firstStart.SpPageAuthorisation.Children.Insert(0, firstMessage);
+                firstStart.SpPageAuthorisation.Children.Insert(1, firstStart.btnEnt);
+                firstStart.SpPageAuthorisation.Children.Insert(2, firstStart.btnReg);
 
                 firstStart.btnEnt.Visibility = Visibility.Hidden;
 
