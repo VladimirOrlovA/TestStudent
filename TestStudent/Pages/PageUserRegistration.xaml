@@ -8,17 +8,17 @@
       Title="PageUserRegistration" Width="400">
 
     <Border Padding="10"  Background="White">
-        <Grid>
+        <Grid x:Name="GridContainer">
             <Grid.RowDefinitions>
                 <RowDefinition Height="70"></RowDefinition>
                 <RowDefinition Height="40"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="40"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="40"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="40"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="40"></RowDefinition>
                 <RowDefinition Height="50"></RowDefinition>
 
@@ -40,12 +40,15 @@
                    FontSize="18"
                    Padding="10"/>
 
-            <TextBox x:Name="tbFullname"
+            <TextBox x:Name="TbFullname"
                      Grid.Row="1" Grid.Column="1"
                      VerticalAlignment="Center"
                      FontSize="18"
                      Padding="10 0"
-                     Text="wdssds"/>
+                     Text="wdssds"
+                     MouseEnter="TbField_MouseEnter"
+                     GotFocus="TbField_GotFocus"
+                     LostFocus="TbField_LostFocus"/>
 
             <Label Grid.Row="3" VerticalAlignment="Center"
                    HorizontalAlignment="Right"
@@ -53,12 +56,15 @@
                    FontSize="18"
                    Padding="10"/>
 
-            <TextBox x:Name="tbLogin"
+            <TextBox x:Name="TbLogin"
                      Grid.Row="3" Grid.Column="1"
                      VerticalAlignment="Center"
                      FontSize="18"
                      Padding="10 0"
-                     Text="wdssds"/>
+                     Text="wdssds"
+                     MouseEnter="TbField_MouseEnter"
+                     GotFocus="TbField_GotFocus"
+                     LostFocus="TbField_LostFocus"/>
 
             <Label Grid.Row="5" VerticalAlignment="Center"
                    HorizontalAlignment="Right"
@@ -66,12 +72,15 @@
                    FontSize="18"
                    Padding="10"/>
 
-            <PasswordBox x:Name="pbPassword"
+            <PasswordBox x:Name="PbPassword"
                          Grid.Row="5" Grid.Column="1"
                          VerticalAlignment="Center"
                          FontSize="18"
                          Padding="10 0"
-                         Password="wdssds"/>
+                         Password="wdssds"
+                         MouseEnter="PbField_MouseEnter"
+                         GotFocus="PbField_GotFocus"
+                         LostFocus="PbField_LostFocus"/>
 
             <Label Grid.Row="7" VerticalAlignment="Center"
                    HorizontalAlignment="Right"
@@ -79,22 +88,25 @@
                    FontSize="18"
                    Padding="10"/>
 
-            <PasswordBox x:Name="pbRePassword"
+            <PasswordBox x:Name="PbRePassword"
                          Grid.Row="7" Grid.Column="1"
                          VerticalAlignment="Center"
                          FontSize="18"
                          Padding="10 0"
-                         Password="wdssds"/>
+                         Password="wdssds"
+                         MouseEnter="PbField_MouseEnter"
+                         GotFocus="PbField_GotFocus"
+                         LostFocus="PbField_LostFocus"/>
 
             <StackPanel Grid.Row="10" Grid.ColumnSpan="2" 
                         Orientation="Horizontal" HorizontalAlignment="Center">
 
-                <Button x:Name="btnOk" Click="btnOk_Click"
+                <Button x:Name="BtnOk" Click="BtnOk_Click"
                     Content="Ok" 
                     Height="30" Width="70"
                     Margin="5"/>
                 
-                <Button x:Name="btnCancel" Click="btnCancel_Click"
+                <Button x:Name="BtnCancel" Click="BtnCancel_Click"
                     Content="Отмена" 
                     Height="30" Width="70"
                     Margin="5"/>
