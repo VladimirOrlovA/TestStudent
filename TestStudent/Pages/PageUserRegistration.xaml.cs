@@ -20,6 +20,9 @@ namespace TestStudent.Pages
     /// </summary>
     public partial class PageUserRegistration : Page
     {
+        static int checkInputFlag = 1;
+        static int comparePassFlag = 1;
+
         public PageUserRegistration()
         {
             InitializeComponent();
@@ -27,7 +30,14 @@ namespace TestStudent.Pages
 
         private void BtnOk_Click(object sender, RoutedEventArgs e)
         {
+            ComparePassword();
+            string str = "";
+            CheckInput("dsd", out str);
 
+           // checkInputFlag = comparePassFlag = true;
+            if (checkInputFlag==1 || comparePassFlag==1)
+                LbErrMes.Content = "Исправить ошибки";
+            else LbErrMes.Content = "Сохранение данных";
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
@@ -49,35 +59,23 @@ namespace TestStudent.Pages
 
         private void TbField_LostFocus(object sender, RoutedEventArgs e)
         {
-            var elem = (sender as TextBox);
+            var elem = sender as TextBox;
+
             elem.Background = Brushes.White;
 
-            string inputVal = elem.Text;
-
-            // проверяем ввод данных в поле
-            if (string.IsNullOrWhiteSpace(inputVal))
+            if (!CheckInput(elem.Text, out string strErrMes))
             {
-                // получаем текущую позицию элемента на котором возникло событие
-                int pos = GridContainer.Children.IndexOf(elem);
-
-                Label errMessage = new Label()
-                {
-                    Foreground = Brushes.Red,
-                    Content = "Вы ничего не ввели " + pos,
-                    Name = "Lb1",
-                };
-
-                elem.BorderBrush = Brushes.Red;
-
-                // устанавливаем свойства положения элемента errMessage в контейнере Grid
-                Grid.SetRow(errMessage, pos);
-                Grid.SetColumn(errMessage, 1);
-                errMessage.Name = "Lb1";
-
-                // добавляем в контейнер элемент errMessage
-                GridContainer.Children.Add(errMessage);
+                elem.BorderBrush = Brushes.Gray;
+                return;
             }
 
+            elem.BorderBrush = Brushes.Red;
+
+            if (elem.Name == "TbFullname")
+                LbErrMesFullname.Content = strErrMes;
+
+            if (elem.Name == "TbLogin")
+                LbErrMesLogin.Content = strErrMes;
         }
 
         private void PbField_MouseEnter(object sender, MouseEventArgs e)
@@ -93,38 +91,92 @@ namespace TestStudent.Pages
 
         private void PbField_LostFocus(object sender, RoutedEventArgs e)
         {
-            (sender as PasswordBox).Background = Brushes.White;
+            var elem = sender as PasswordBox;
+            elem.Background = Brushes.White;
+
+            if (!CheckInput(elem.Password, out string strErrMes))
+            {
+                elem.BorderBrush = Brushes.Gray;
+                return;
+            }
+
+            elem.BorderBrush = Brushes.Red;
+
+            if (elem.Name == "PbPassword")
+                LbErrMesPassword.Content = strErrMes;
+
+            if (elem.Name == "PbRePassword")
+                LbErrMesRePassword.Content = strErrMes;
         }
 
         private void TbField_KeyDown(object sender, RoutedEventArgs e)
         {
-            //var elem = (sender as TextBox);
-            //int pos = GridContainer.Children.IndexOf(elem);
-            //GridContainer.Children.RemoveAt(pos+1);
+            var elem = sender as TextBox;
 
-            object searchElem = GridContainer.FindName("Lb1");
-            if (searchElem is Label)
-            {
-                Label errMes = searchElem as Label;
-                errMes.Foreground = Brushes.Blue;
-            }
+            if (elem.Name == "TbFullname")
+                LbErrMesFullname.Content = null;
+
+            if (elem.Name == "TbLogin")
+                LbErrMesLogin.Content = null;
         }
 
         private void PbField_KeyDown(object sender, RoutedEventArgs e)
         {
-            var elem = (sender as TextBox);
-            var pos = GridContainer.Children.IndexOf(elem);
-            GridContainer.Children.RemoveAt(pos);
+            var elem = sender as PasswordBox;
+
+            if (elem.Name == "PbPassword")
+                LbErrMesPassword.Content = null;
+
+            if (elem.Name == "PbRePassword")
+                LbErrMesRePassword.Content = null;
         }
 
-        void Find(object sender, RoutedEventArgs e)
+        bool CheckInput(string inputVal, out string strErrMes)
         {
-            object wantedNode = GridContainer.FindName("Lb1");
-            if (wantedNode is Label)
+            checkInputFlag = 1;
+            if (string.IsNullOrWhiteSpace(inputVal))
             {
-                // Following executed if Text element was found.
-                Label wantedChild = wantedNode as Label;
-                wantedChild.Foreground = Brushes.Blue;
+                strErrMes = "*поле обязательное для заполнения";
+                return true;
+            }
+            if (inputVal.Length > 0 && inputVal[0] == ' ')
+            {
+                strErrMes = "*не может начинаться с пробела";
+                return true;
+            }
+            if (inputVal.Length < 5)
+            {
+                strErrMes = "*введено менее 5 символов";
+                return true;
+            }
+            checkInputFlag = 0;
+            strErrMes = null;
+            return false;
+        }
+
+        void ComparePassword()
+        {
+            if (PbPassword.Password != PbRePassword.Password)
+            {
+                LbErrMesRePassword.Content = "Пароли должны быть идентичны";
+                comparePassFlag = 1;
+            }
+            else comparePassFlag = 0;
+        }
+
+        private void PbRePassword_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (PbPassword.Password != PbRePassword.Password)
+            {
+                PbRePassword.BorderBrush = PbPassword.BorderBrush = Brushes.Red;
+                PbRePassword.Foreground = Brushes.Red;
+                comparePassFlag = 1;
+            }
+            else
+            {
+                PbRePassword.BorderBrush = PbPassword.BorderBrush = Brushes.Gray;
+                PbRePassword.Foreground = Brushes.Black;
+                comparePassFlag = 0;
             }
         }
     }
