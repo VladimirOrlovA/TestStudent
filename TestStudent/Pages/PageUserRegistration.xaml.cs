@@ -45,8 +45,6 @@ namespace TestStudent.Pages
         {
             var elem = (sender as TextBox);
             elem.Background = Brushes.LightGreen;
-
-            
         }
 
         private void TbField_LostFocus(object sender, RoutedEventArgs e)
@@ -54,8 +52,10 @@ namespace TestStudent.Pages
             var elem = (sender as TextBox);
             elem.Background = Brushes.White;
 
+            string inputVal = elem.Text;
+
             // проверяем ввод данных в поле
-            if (elem.Text == "")
+            if (string.IsNullOrWhiteSpace(inputVal))
             {
                 // получаем текущую позицию элемента на котором возникло событие
                 int pos = GridContainer.Children.IndexOf(elem);
@@ -63,7 +63,8 @@ namespace TestStudent.Pages
                 Label errMessage = new Label()
                 {
                     Foreground = Brushes.Red,
-                    Content = "Вы ничего не ввели " + pos
+                    Content = "Вы ничего не ввели " + pos,
+                    Name = "Lb1",
                 };
 
                 elem.BorderBrush = Brushes.Red;
@@ -71,6 +72,7 @@ namespace TestStudent.Pages
                 // устанавливаем свойства положения элемента errMessage в контейнере Grid
                 Grid.SetRow(errMessage, pos);
                 Grid.SetColumn(errMessage, 1);
+                errMessage.Name = "Lb1";
 
                 // добавляем в контейнер элемент errMessage
                 GridContainer.Children.Add(errMessage);
@@ -92,6 +94,38 @@ namespace TestStudent.Pages
         private void PbField_LostFocus(object sender, RoutedEventArgs e)
         {
             (sender as PasswordBox).Background = Brushes.White;
+        }
+
+        private void TbField_KeyDown(object sender, RoutedEventArgs e)
+        {
+            //var elem = (sender as TextBox);
+            //int pos = GridContainer.Children.IndexOf(elem);
+            //GridContainer.Children.RemoveAt(pos+1);
+
+            object searchElem = GridContainer.FindName("Lb1");
+            if (searchElem is Label)
+            {
+                Label errMes = searchElem as Label;
+                errMes.Foreground = Brushes.Blue;
+            }
+        }
+
+        private void PbField_KeyDown(object sender, RoutedEventArgs e)
+        {
+            var elem = (sender as TextBox);
+            var pos = GridContainer.Children.IndexOf(elem);
+            GridContainer.Children.RemoveAt(pos);
+        }
+
+        void Find(object sender, RoutedEventArgs e)
+        {
+            object wantedNode = GridContainer.FindName("Lb1");
+            if (wantedNode is Label)
+            {
+                // Following executed if Text element was found.
+                Label wantedChild = wantedNode as Label;
+                wantedChild.Foreground = Brushes.Blue;
+            }
         }
     }
 }

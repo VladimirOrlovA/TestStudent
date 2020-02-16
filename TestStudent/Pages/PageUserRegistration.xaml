@@ -48,7 +48,8 @@
                      Text="wdssds"
                      MouseEnter="TbField_MouseEnter"
                      GotFocus="TbField_GotFocus"
-                     LostFocus="TbField_LostFocus"/>
+                     LostFocus="TbField_LostFocus"
+                     KeyDown="TbField_KeyDown"/>
 
             <Label Grid.Row="3" VerticalAlignment="Center"
                    HorizontalAlignment="Right"
@@ -64,7 +65,8 @@
                      Text="wdssds"
                      MouseEnter="TbField_MouseEnter"
                      GotFocus="TbField_GotFocus"
-                     LostFocus="TbField_LostFocus"/>
+                     LostFocus="TbField_LostFocus"
+                     KeyDown="TbField_KeyDown"/>
 
             <Label Grid.Row="5" VerticalAlignment="Center"
                    HorizontalAlignment="Right"
@@ -80,7 +82,8 @@
                          Password="wdssds"
                          MouseEnter="PbField_MouseEnter"
                          GotFocus="PbField_GotFocus"
-                         LostFocus="PbField_LostFocus"/>
+                         LostFocus="PbField_LostFocus"
+                         KeyDown="PbField_KeyDown"/>
 
             <Label Grid.Row="7" VerticalAlignment="Center"
                    HorizontalAlignment="Right"
@@ -96,7 +99,8 @@
                          Password="wdssds"
                          MouseEnter="PbField_MouseEnter"
                          GotFocus="PbField_GotFocus"
-                         LostFocus="PbField_LostFocus"/>
+                         LostFocus="PbField_LostFocus"
+                         KeyDown="PbField_KeyDown"/>
 
             <StackPanel Grid.Row="10" Grid.ColumnSpan="2" 
                         Orientation="Horizontal" HorizontalAlignment="Center">
