@@ -33,11 +33,11 @@ namespace DbOperation.lib
                         return null;
                     }
                     startCount = 0;
-                    return "Данные в БД изменены/повреждены вне программы";
+                    return "Внимание! Данные в БД изменены/повреждены вне программы!";
                 }
             }
             startCount = 0;
-            return "Файл БД не найден!";
+            return "Внимание! Файл БД не найден!";
         }
 
         public string AddUser(User newUser)

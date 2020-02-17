@@ -47,7 +47,9 @@ namespace TestStudent
             string errMes = db.CheckDataBase(out int startCount);
 
             if (!string.IsNullOrEmpty(errMes))
-                MessageBox.Show(errMes + "\nВосстановите файл БД, либо продолжите работать с программой, будет создана новая БД, пустая");
+                MessageBox.Show(errMes + "\n\nВосстановите файл БД, либо продолжите работать с программой, будет создана новая БД, пустая");
+
+            LiteDB.LiteDatabase ldb = new LiteDB.LiteDatabase("checkDB");
 
             var firstStart = new PageAuthorisation();
             if (startCount == 0)
