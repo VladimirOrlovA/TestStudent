@@ -10,7 +10,13 @@ namespace DbOperation.lib
 {
     public class DbConnection
     {
-        public string CheckDataBase(out int count)
+        string Path { get; set; }
+        public DbConnection(string path)
+        {
+            this.Path = path;
+        }
+
+        public string CheckDataBase(out int startCount)
         {
             // Проверяем существует ли файл на диске
             if (File.Exists(Path))
@@ -20,37 +26,42 @@ namespace DbOperation.lib
                     // проверяем есть в БД таблица checkDB
                     if (ldb.CollectionExists("checkDB"))
                     {
-                        var startCount = ldb.GetCollection<int>("checkDB");
-                        startCount.Insert(1);
+                        var checkDB = ldb.GetCollection<int>("checkDB");
+                        checkDB.Insert(1);
                         // кол-во записей в checkDB соответствует кол-ву запусков программы
-                        count = startCount.Count();
+                        startCount = checkDB.Count();
                         return null;
                     }
+                    startCount = 0;
+                    return "Данные в БД изменены/повреждены вне программы";
                 }
             }
-            count = 0;
-            return "Файл БД не найден";
-        }
-        string Path { get; set; }
-        public DbConnection(string path)
-        {
-            this.Path = path;
+            startCount = 0;
+            return "Файл БД не найден!";
         }
 
-        public Exception AddUser(User newUser)
+        public string AddUser(User newUser)
         {
             try
             {
                 using (var ldb = new LiteDatabase(Path))
                 {
                     var users = ldb.GetCollection<User>("user");
-                    users.Insert(newUser);
+
+                    User searchUser = users.FindOne(f => f.Login == newUser.Login);
+
+                    if (searchUser == null)
+                        users.Insert(newUser);
+                    else
+                    {
+                        return "Пользователь с таким именем уже существует";
+                    }
                 }
                 return null;
             }
             catch (Exception e)
             {
-                return e;
+                return "Ошибка " + e;
             }
         }
 
@@ -91,5 +102,6 @@ namespace DbOperation.lib
                 return userDB;
             }
         }
+
     }
 }

@@ -13,5 +13,6 @@ namespace DbOperation.lib
         public string Password { get; set; }
         public string Fullname { get; set; }
         public DateTime CreatedDate { get; set; }
+        public int status_id { get; set; } // 1 - admin-teacher  2 - user-student
     }
 }

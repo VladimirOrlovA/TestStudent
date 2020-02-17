@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DbOperation.lib;
 
 namespace TestStudent.Pages
 {
@@ -25,19 +26,49 @@ namespace TestStudent.Pages
         public PageUserRegistration()
         {
             InitializeComponent();
+
+            if (MainWindow.startCount == 0)
+            {
+                TbLogin.Text = "admin";
+                TbFullname.Text = "Vladimir Orlov";
+            }
         }
 
         private void BtnOk_Click(object sender, RoutedEventArgs e)
         {
             ComparePassword();
 
-            bool checkInputFlag = (!string.IsNullOrEmpty((string)LbErrMesFullname.Content) || 
+            bool checkInputFlag = (!string.IsNullOrEmpty((string)LbErrMesFullname.Content) ||
                                         !string.IsNullOrEmpty((string)LbErrMesLogin.Content) ||
                                         !string.IsNullOrEmpty((string)LbErrMesPassword.Content));
 
             if (checkInputFlag || comparePassFlag)
-                LbErrMes.Content = "Исправить ошибки"; 
-            else LbErrMes.Content = "Сохранение данных";
+                LbErrMes.Content = "Исправить ошибки";
+            else
+            {
+                LbErrMes.Content = "Сохранение данных";
+
+                User newUser = new User();
+                newUser.Fullname = TbFullname.Text;
+                newUser.Login = TbLogin.Text;
+                newUser.Password = PbPassword.Password;
+                newUser.CreatedDate = DateTime.Now;
+                newUser.status_id = MainWindow.startCount == 0 ? 1 : 2;
+
+                DbConnection db = new DbConnection(MainWindow.path);
+
+                string errMes = db.AddUser(newUser);
+
+                if (!string.IsNullOrEmpty(errMes))
+                {
+                    MessageBox.Show(errMes);
+                }
+                else
+                {
+                    LbErrMes.Content = "Пользователь зарегистрирован";
+                }
+                
+            }
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)

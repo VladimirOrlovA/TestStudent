@@ -25,12 +25,13 @@ namespace TestStudent
     public partial class MainWindow : Window
     {
         // Путь где хранится файл БД
-        static string path = @"C:\Users\Vladimir\source\repos\TestStudent\TestStudent\DataBase\testStudentData.db";
+        public static string path = @"C:\Users\Vladimir\source\repos\TestStudent\TestStudent\DataBase\testStudentData.db";
         // Создаем экземпляр класса отвечающего за работу с БД
         public static DbConnection db = new DbConnection(path);
 
         public static User user = null;
         public static Frame _MainFrame = null;
+        public static int startCount = 0;
 
 
         public MainWindow()
@@ -43,14 +44,17 @@ namespace TestStudent
 
         public static Page StartFirstPage()
         {
-            //MessageBox.Show(db.CheckDataBase(out int count));
+            string errMes = db.CheckDataBase(out int startCount);
 
-            if (true)
-            {
-                var firstStart = new PageAuthorisation();
+            if (!string.IsNullOrEmpty(errMes))
+                MessageBox.Show(errMes + "\nВосстановите файл БД, либо продолжите работать с программой, будет создана новая БД, пустая");
+
+            var firstStart = new PageAuthorisation();
+            if (startCount == 0)
+            {              
                 Label firstMessage = new Label()
                 {
-                    Content = "Первый запуск программы! \nсоздание учетной записи администратора\n\n",
+                    Content = "Первый запуск программы! \nсоздание учетной записи администратора",
                     FontSize = 25,
                     Foreground = new SolidColorBrush(Colors.Black),
                     Background = new SolidColorBrush(Colors.White)
@@ -65,6 +69,7 @@ namespace TestStudent
 
                 return firstStart;
             }
+            return firstStart;
         }
     }
 }
