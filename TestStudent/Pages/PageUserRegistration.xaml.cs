@@ -20,8 +20,7 @@ namespace TestStudent.Pages
     /// </summary>
     public partial class PageUserRegistration : Page
     {
-        static int checkInputFlag = 1;
-        static int comparePassFlag = 1;
+        bool comparePassFlag = true;
 
         public PageUserRegistration()
         {
@@ -31,12 +30,13 @@ namespace TestStudent.Pages
         private void BtnOk_Click(object sender, RoutedEventArgs e)
         {
             ComparePassword();
-            string str = "";
-            CheckInput("dsd", out str);
 
-           // checkInputFlag = comparePassFlag = true;
-            if (checkInputFlag==1 || comparePassFlag==1)
-                LbErrMes.Content = "Исправить ошибки";
+            bool checkInputFlag = (!string.IsNullOrEmpty((string)LbErrMesFullname.Content) || 
+                                        !string.IsNullOrEmpty((string)LbErrMesLogin.Content) ||
+                                        !string.IsNullOrEmpty((string)LbErrMesPassword.Content));
+
+            if (checkInputFlag || comparePassFlag)
+                LbErrMes.Content = "Исправить ошибки"; 
             else LbErrMes.Content = "Сохранение данных";
         }
 
@@ -133,7 +133,6 @@ namespace TestStudent.Pages
 
         bool CheckInput(string inputVal, out string strErrMes)
         {
-            checkInputFlag = 1;
             if (string.IsNullOrWhiteSpace(inputVal))
             {
                 strErrMes = "*поле обязательное для заполнения";
@@ -149,7 +148,6 @@ namespace TestStudent.Pages
                 strErrMes = "*введено менее 5 символов";
                 return true;
             }
-            checkInputFlag = 0;
             strErrMes = null;
             return false;
         }
@@ -159,9 +157,9 @@ namespace TestStudent.Pages
             if (PbPassword.Password != PbRePassword.Password)
             {
                 LbErrMesRePassword.Content = "Пароли должны быть идентичны";
-                comparePassFlag = 1;
+                comparePassFlag = true;
             }
-            else comparePassFlag = 0;
+            else comparePassFlag = false;
         }
 
         private void PbRePassword_KeyUp(object sender, KeyEventArgs e)
@@ -170,13 +168,13 @@ namespace TestStudent.Pages
             {
                 PbRePassword.BorderBrush = PbPassword.BorderBrush = Brushes.Red;
                 PbRePassword.Foreground = Brushes.Red;
-                comparePassFlag = 1;
+                comparePassFlag = true;
             }
             else
             {
                 PbRePassword.BorderBrush = PbPassword.BorderBrush = Brushes.Gray;
                 PbRePassword.Foreground = Brushes.Black;
-                comparePassFlag = 0;
+                comparePassFlag = false;
             }
         }
     }
