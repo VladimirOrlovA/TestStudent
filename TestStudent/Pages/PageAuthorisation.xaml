@@ -18,7 +18,7 @@
                      KeyDown="TbInputLogin_KeyDown"
                      LostFocus="TbInputLogin_LostFocus"
                      FontFamily="Bahnschrift Light Condensed"
-                     Text="User"/>
+                     Text="user1"/>
         <Label x:Name="LbInputLoginErrMess" HorizontalAlignment="Center"/>
 
         <Label HorizontalAlignment="Center" FontSize="18" Margin="0"
@@ -28,7 +28,7 @@
                      VerticalContentAlignment="Center" Margin="10 0 10 0"
                      KeyDown="PbInputPassword_KeyDown"
                      LostFocus="PbInputPassword_LostFocus"
-                     Password="123"/>
+                     Password="12345"/>
         <Label x:Name="LbInputPasswordErrMess" HorizontalAlignment="Center"/>
 
         <Button x:Name="btnEnt" Click="BtnEnt_Click" HorizontalAlignment="Center" 

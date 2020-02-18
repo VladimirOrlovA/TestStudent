@@ -10,5 +10,11 @@ namespace DbOperation.lib
     {
         public string LoggedUser { get; set; }
         public DateTime LoggedTime { get; set; }
+
+        public LoggedHistory(string loggedUser)
+        {
+            this.LoggedUser = loggedUser;
+            this.LoggedTime = DateTime.Now;
+        }
     }
 }

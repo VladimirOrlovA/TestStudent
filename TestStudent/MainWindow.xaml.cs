@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 using DbOperation.lib;
 using TestStudent.Pages;
@@ -43,13 +32,12 @@ namespace TestStudent
 
         public static Page StartFirstPage()
         {
-            string errMes = db.CheckDataBase(out int startCount);
+            string errMes = db.CheckDataBase();
 
             if (!string.IsNullOrEmpty(errMes))
             {
-                errMes += "\n\nВосстановите файл БД, либо продолжите работать с программой ( OK ), будет создана новая БД, пустая.";
-                MessageBoxResult result = MessageBox.Show(errMes, "Ошибка доступа к базе данных",
-                                        MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                MessageBoxResult result = MessageBox.Show(errMes, "Подготовка к работе",
+                                        MessageBoxButton.OKCancel, MessageBoxImage.Warning);
 
                 if (result == MessageBoxResult.Cancel)
                 {
@@ -57,15 +45,16 @@ namespace TestStudent
                 }
                 else
                 {
-                    using (LiteDB.LiteDatabase ldb = new LiteDB.LiteDatabase(path))
-                    {
-                        var logInfo = ldb.GetCollection<LoggedHistory>("LoggedHistory");
-                    }
-
+                    using (LiteDB.LiteDatabase ldb = new LiteDB.LiteDatabase(path)) { };
                 }
             }
 
 
+            using (LiteDB.LiteDatabase ldb = new LiteDB.LiteDatabase(path))
+            {
+                if (ldb.CollectionExists("User"))
+                    startCount = 1;
+            };
 
             var firstStart = new PageAuthorisation();
             if (startCount == 0)

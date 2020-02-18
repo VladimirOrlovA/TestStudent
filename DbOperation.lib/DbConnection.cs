@@ -16,28 +16,27 @@ namespace DbOperation.lib
             this.Path = path;
         }
 
-        public string CheckDataBase(out int startCount)
+        public string CheckDataBase()
         {
             // Проверяем существует ли файл на диске
             if (File.Exists(Path))
             {
                 using (var ldb = new LiteDatabase(Path))
                 {
-                    // проверяем есть ли в БД документ LoggedHistory
-                    var excb = ldb.CollectionExists("LoggedHistory");
-                    if (ldb.CollectionExists("LoggedHistory"))
+                    // проверяем есть ли в БД документ User
+                    var excb = ldb.CollectionExists("User");
+                    if (ldb.CollectionExists("User"))
                     {
-                        var logInfo = ldb.GetCollection<LoggedHistory>("LoggedHistory");
-                        // получаем кол-во записей входа в программу
-                        startCount = logInfo.Count();
+                        var checkFirstRecord = ldb.GetCollection<User>("User");
                         return null;
                     }
-                    startCount = 0;
-                    return "Внимание! Данные в БД изменены/повреждены вне программы!";
+                    return "Внимание! Для продолжения работы с программой необходимо зарегистрировать первого пользователя.";
                 }
             }
-            startCount = 0;
-            return "Внимание! Файл БД не найден!";
+            return "Внимание! Файл БД не найден." +
+                   "\n\nВозможная причина:\n" +
+                   " - первый запуск программы\n" +
+                   " - файл БД был удален\n";
         }
 
         public string AddUser(User newUser)

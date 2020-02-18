@@ -5,10 +5,73 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TestStudent.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="PageUserProfile">
 
-    <Grid>
-        
+      Title="PageUserProfile">
+    
+    
+    <Grid Background="LightGray">
+
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+            
+        <Label Content="Профиль пользователя" FontSize="20" FontWeight="Bold" Grid.Row="0"/>
+
+
+        <GroupBox Header="Персональные данные" Grid.Row="1" BorderBrush="Black" Padding="30" Margin="10">
+            <StackPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Label x:Name="lbFullname" Content="Полное имя" Grid.Row="0" Grid.Column="0"/>
+                    <Label x:Name="lbFullnameVal" Content="нет данных" Grid.Row="0" Grid.Column="1"/>
+                    
+                    <Label x:Name="lbLogin" Content="Имя учетной записи" Grid.Row="1" Grid.Column="0"/>
+                    <Label x:Name="lbLoginVal" Content="нет данных" Grid.Row="1" Grid.Column="1"/>
+                    
+                    <Label x:Name="lbCreatedDate" Content="Дата регистрации" Grid.Row="2" Grid.Column="0"/>
+                    <Label x:Name="lbCreatedDateVal" Content="нет данных" Grid.Row="2" Grid.Column="1"/>
+                    
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Header="Информация о проденных тестах" Grid.Row="2" BorderBrush="Black" Padding="30" Margin="10">
+            <StackPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Label x:Name="lbTestsFinished" Content="Выполнено тестов" Grid.Row="0" Grid.Column="0"/>
+                    <Label x:Name="lbTestsFinishedVal" Content="нет данных" Grid.Row="0" Grid.Column="1"/>
+                    
+                    <Label x:Name="lbTestsPassed" Content="Пройдено тестов" Grid.Row="1" Grid.Column="0"/>
+                    <Label x:Name="lbTestsPassedVal" Content="нет данных" Grid.Row="1" Grid.Column="1"/>
+                    
+                    <Label x:Name="lbTestFailed" Content="Провалено тестов" Grid.Row="2" Grid.Column="0"/>
+                    <Label x:Name="lbTestFailedVal" Content="нет данных" Grid.Row="2" Grid.Column="1"/>
+                    
+                </Grid>
+            </StackPanel>
+        </GroupBox>
     </Grid>
 </Page>
