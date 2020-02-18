@@ -23,13 +23,13 @@ namespace DbOperation.lib
             {
                 using (var ldb = new LiteDatabase(Path))
                 {
-                    // проверяем есть в БД таблица checkDB
-                    if (ldb.CollectionExists("checkDB"))
+                    // проверяем есть ли в БД документ LoggedHistory
+                    var excb = ldb.CollectionExists("LoggedHistory");
+                    if (ldb.CollectionExists("LoggedHistory"))
                     {
-                        var checkDB = ldb.GetCollection<int>("checkDB");
-                        checkDB.Insert(1);
-                        // кол-во записей в checkDB соответствует кол-ву запусков программы
-                        startCount = checkDB.Count();
+                        var logInfo = ldb.GetCollection<LoggedHistory>("LoggedHistory");
+                        // получаем кол-во записей входа в программу
+                        startCount = logInfo.Count();
                         return null;
                     }
                     startCount = 0;

@@ -37,7 +37,6 @@ namespace TestStudent
         public MainWindow()
         {
             InitializeComponent();
-
             _MainFrame = MainFrame;
             MainWindow._MainFrame.Navigate(StartFirstPage());
         }
@@ -47,13 +46,30 @@ namespace TestStudent
             string errMes = db.CheckDataBase(out int startCount);
 
             if (!string.IsNullOrEmpty(errMes))
-                MessageBox.Show(errMes + "\n\nВосстановите файл БД, либо продолжите работать с программой, будет создана новая БД, пустая");
+            {
+                errMes += "\n\nВосстановите файл БД, либо продолжите работать с программой ( OK ), будет создана новая БД, пустая.";
+                MessageBoxResult result = MessageBox.Show(errMes, "Ошибка доступа к базе данных",
+                                        MessageBoxButton.OKCancel, MessageBoxImage.Error);
 
-            LiteDB.LiteDatabase ldb = new LiteDB.LiteDatabase("checkDB");
+                if (result == MessageBoxResult.Cancel)
+                {
+                    App.Current.Shutdown();
+                }
+                else
+                {
+                    using (LiteDB.LiteDatabase ldb = new LiteDB.LiteDatabase(path))
+                    {
+                        var logInfo = ldb.GetCollection<LoggedHistory>("LoggedHistory");
+                    }
+
+                }
+            }
+
+
 
             var firstStart = new PageAuthorisation();
             if (startCount == 0)
-            {              
+            {
                 Label firstMessage = new Label()
                 {
                     Content = "Первый запуск программы! \nсоздание учетной записи администратора",
