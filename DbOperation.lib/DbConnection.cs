@@ -135,7 +135,7 @@ namespace DbOperation.lib
                     if (searchUser == null)
                         subjects.Insert(newSubject);
                     else
-                        return "Пользователь с таким именем уже существует";
+                        return "Такая запись уже существует";
                 }
                 return null;
             }

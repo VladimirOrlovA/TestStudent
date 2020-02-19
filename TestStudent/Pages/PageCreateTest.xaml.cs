@@ -126,15 +126,20 @@ namespace TestStudent.Pages
         {
             Subject subject = new Subject();
             subject.Name = _textBox.Text;
-            MainWindow.db.AddSubject(subject);
 
-            // для отображения и доступгости в текущем сеансе, т.к. заполнение контентом идет при загрузке страницы
-            var newRbtn = new RadioButton() { Content = subject.Name };
-            int pos = _stackPanel.Children.Count;
-            _stackPanel.Children.Insert(pos - 2, newRbtn);
+            string errMes = MainWindow.db.AddSubject(subject);
 
-            RemoveBlockAddItem();
-            _stackPanel.Children.OfType<Button>().Last().Visibility = Visibility.Visible;
+            if (errMes == null)
+            {
+                // для отображения и доступности в текущем сеансе, т.к. заполнение контентом идет при загрузке страницы
+                var newRbtn = new RadioButton() { Content = subject.Name };
+                int pos = _stackPanel.Children.Count;
+                _stackPanel.Children.Insert(pos - 2, newRbtn);
+
+                RemoveBlockAddItem();
+                _stackPanel.Children.OfType<Button>().Last().Visibility = Visibility.Visible;
+            }
+            else MessageBox.Show(errMes);
         }
     }
 }
