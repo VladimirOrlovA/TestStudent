@@ -7,8 +7,8 @@
       mc:Ignorable="d" 
       Title="PageAuthorisation">
 
-    <StackPanel x:Name="SpPageAuthorisation" HorizontalAlignment="Center">
-        
+    <StackPanel x:Name="SpPageAuthorisation" HorizontalAlignment="Center" Margin="50">
+
         <Label HorizontalAlignment="Center" FontSize="18" Margin="0"
                FontFamily="Bahnschrift Light Condensed" Foreground="White">Логин</Label>
         <TextBox x:Name="TbInputLogin" 
@@ -19,7 +19,7 @@
                      LostFocus="TbInputLogin_LostFocus"
                      FontFamily="Bahnschrift Light Condensed"
                      Text="user1"/>
-        <Label x:Name="LbInputLoginErrMess" HorizontalAlignment="Center"/>
+        <Label x:Name="LbInputLoginErrMess" HorizontalAlignment="Center" Height="30"/>
 
         <Label HorizontalAlignment="Center" FontSize="18" Margin="0"
                FontFamily="Bahnschrift Light Condensed" Foreground="White">Пароль</Label>
@@ -29,7 +29,7 @@
                      KeyDown="PbInputPassword_KeyDown"
                      LostFocus="PbInputPassword_LostFocus"
                      Password="12345"/>
-        <Label x:Name="LbInputPasswordErrMess" HorizontalAlignment="Center"/>
+        <Label x:Name="LbInputPasswordErrMess" HorizontalAlignment="Center" Height="30"/>
 
         <Button x:Name="btnEnt" Click="BtnEnt_Click" HorizontalAlignment="Center" 
                 Width="200" Height="30" FontSize="18"  Margin="10 40 10 10"

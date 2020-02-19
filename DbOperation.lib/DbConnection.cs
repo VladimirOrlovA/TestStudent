@@ -83,24 +83,41 @@ namespace DbOperation.lib
             }
         }
 
-        public User GetUserById(int userId, out Exception exc)
+        public User GetUserById(int userId)
         {
             User userDB = null;
-            try
+
+            using (var ldb = new LiteDatabase(Path))
             {
-                using (var ldb = new LiteDatabase(Path))
-                {
-                    userDB = ldb.GetCollection<User>("user").FindById(userId);
-                    exc = null;
-                    return userDB;
-                }
-            }
-            catch (Exception e)
-            {
-                exc = e;
+                userDB = ldb.GetCollection<User>("user").FindById(userId);
                 return userDB;
             }
         }
 
+        public void AddLoggedHistory(User user)
+        {
+            using (var ldb = new LiteDatabase(Path))
+            {
+                var loggedUser = new LoggedHistory(user.Id);
+                var loggedHistory = ldb.GetCollection<LoggedHistory>("LoggedHistory");
+                loggedHistory.Insert(loggedUser);
+            }
+        }
+
+        public User GetUserInfo()
+        {
+            User user = new User();
+
+            using (var ldb = new LiteDatabase(Path))
+            {
+                // подсчет кол-ва входов пользователя для статистики
+                var records = ldb.GetCollection<LoggedHistory>("LoggedHistory").FindAll().ToList();
+                int currentUserId = records.Last().LoggedUserId;
+                var recordsByCurrentUserId = ldb.GetCollection<LoggedHistory>("LoggedHistory").Find(f => f.LoggedUserId == currentUserId);
+                user.LoginCount = recordsByCurrentUserId.Count();
+            }
+
+            return user;
+        }
     }
 }

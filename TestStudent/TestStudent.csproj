@@ -74,6 +74,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\PageCreateTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\PageUserProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -84,8 +88,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MenuBox.cs" />
     <Compile Include="Pages\PageAuthorisation.xaml.cs">
       <DependentUpon>PageAuthorisation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageCreateTest.xaml.cs">
+      <DependentUpon>PageCreateTest.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\PageUserProfile.xaml.cs">
       <DependentUpon>PageUserProfile.xaml</DependentUpon>

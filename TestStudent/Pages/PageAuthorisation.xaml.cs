@@ -25,7 +25,13 @@ namespace TestStudent.Pages
 
                 if (MainWindow.user != null)
                 {
+                    // внесение информации в БД о входе пользователя
+                    MainWindow.db.AddLoggedHistory(MainWindow.user);
+
+                    // переход в профиль пользователя
                     MainWindow._MainFrame.Navigate(new PageUserProfile());
+
+                    MenuBox.Menu();
                 }
                 else
                 {

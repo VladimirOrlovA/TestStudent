@@ -13,21 +13,23 @@ namespace TestStudent
 
     public partial class MainWindow : Window
     {
-        // Путь где хранится файл БД
         public static string path = @"C:\Users\Vladimir\source\repos\TestStudent\TestStudent\DataBase\testStudentData.db";
-        // Создаем экземпляр класса отвечающего за работу с БД
         public static DbConnection db = new DbConnection(path);
-
         public static User user = null;
-        public static Frame _MainFrame = null;
         public static int startCount = 0;
+        public static Frame _MainFrame = null;
+        public static Menu _MainMenu = null;
 
 
         public MainWindow()
         {
             InitializeComponent();
             _MainFrame = MainFrame;
-            MainWindow._MainFrame.Navigate(StartFirstPage());
+            _MainMenu = MainMenu;
+
+            //MainWindow._MainFrame.Navigate(StartFirstPage());
+
+            MainWindow._MainFrame.Navigate(DebugPage());
         }
 
         public static Page StartFirstPage()
@@ -45,7 +47,7 @@ namespace TestStudent
                 }
                 else
                 {
-                    using (LiteDB.LiteDatabase ldb = new LiteDB.LiteDatabase(path)) { };
+                    //using (LiteDB.LiteDatabase ldb = new LiteDB.LiteDatabase(path)) { };
                 }
             }
 
@@ -77,6 +79,12 @@ namespace TestStudent
                 return firstStart;
             }
             return firstStart;
+        }
+
+        public static Page DebugPage()
+        {
+            var page = new PageCreateTest();
+            return page;
         }
     }
 }

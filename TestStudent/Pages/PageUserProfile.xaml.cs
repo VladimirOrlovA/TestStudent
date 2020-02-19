@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 
 namespace TestStudent.Pages
 {
@@ -10,6 +11,11 @@ namespace TestStudent.Pages
         public PageUserProfile()
         {
             InitializeComponent();
+
+            lbFullnameVal.Content = MainWindow.user.Fullname;
+            lbLoginVal.Content = MainWindow.user.Login;
+            lbCreatedDateVal.Content = Convert.ToString(MainWindow.user.CreatedDate);
+            lbLoginCountVal.Content = MainWindow.db.GetUserInfo().LoginCount;
         }
     }
 }

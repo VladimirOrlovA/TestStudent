@@ -5,25 +5,24 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TestStudent.Pages"
       mc:Ignorable="d" 
-
       Title="PageUserProfile">
-    
-    
-    <Grid Background="LightGray">
+
+    <Grid Background="LightGray" Margin="80 10">
 
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-            
-        <Label Content="Профиль пользователя" FontSize="20" FontWeight="Bold" Grid.Row="0"/>
+
+        <Label Content="Профиль пользователя" FontSize="20" FontWeight="Bold" Grid.Row="0" Padding="10" Margin="10"/>
 
 
-        <GroupBox Header="Персональные данные" Grid.Row="1" BorderBrush="Black" Padding="30" Margin="10">
+        <GroupBox Header="Персональные данные" Grid.Row="1" BorderBrush="Black" Padding="20" Margin="10">
             <StackPanel>
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
@@ -43,11 +42,14 @@
                     <Label x:Name="lbCreatedDate" Content="Дата регистрации" Grid.Row="2" Grid.Column="0"/>
                     <Label x:Name="lbCreatedDateVal" Content="нет данных" Grid.Row="2" Grid.Column="1"/>
                     
+                    <Label x:Name="lbLoginCount" Content="Кол-во входов" Grid.Row="3" Grid.Column="0"/>
+                    <Label x:Name="lbLoginCountVal" Content="нет данных" Grid.Row="3" Grid.Column="1"/>
+                    
                 </Grid>
             </StackPanel>
         </GroupBox>
 
-        <GroupBox Header="Информация о проденных тестах" Grid.Row="2" BorderBrush="Black" Padding="30" Margin="10">
+        <GroupBox Header="Информация о пройденных тестах" Grid.Row="2" BorderBrush="Black" Padding="30" Margin="10">
             <StackPanel>
                 <Grid>
                     <Grid.RowDefinitions>

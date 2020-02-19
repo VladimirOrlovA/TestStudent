@@ -8,12 +8,13 @@ namespace DbOperation.lib
 {
     public class LoggedHistory
     {
-        public string LoggedUser { get; set; }
+
+        public int LoggedUserId { get; set; }
         public DateTime LoggedTime { get; set; }
 
-        public LoggedHistory(string loggedUser)
+        public LoggedHistory(int loggedUserId)
         {
-            this.LoggedUser = loggedUser;
+            this.LoggedUserId = loggedUserId;
             this.LoggedTime = DateTime.Now;
         }
     }
