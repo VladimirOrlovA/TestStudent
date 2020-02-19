@@ -20,6 +20,8 @@ namespace TestStudent.Pages
     /// </summary>
     public partial class PageCreateTest : Page
     {
+        static StackPanel _stackPanel = null;
+
         public PageCreateTest()
         {
             InitializeComponent();
@@ -55,6 +57,74 @@ namespace TestStudent.Pages
                 }
             }
             return null;
+        }
+
+        private void BtnAddSubject_Click(object sender, RoutedEventArgs e)
+        {
+            btnAddSubject.Visibility = Visibility.Collapsed;
+            _stackPanel = spExpSubject;
+            _stackPanel.Children.Add(AddBlockAddItem());
+        }
+
+        private void BtnAddSection_Click(object sender, RoutedEventArgs e)
+        {
+            btnAddSection.Visibility = Visibility.Collapsed;
+            _stackPanel = spExpSection;
+            _stackPanel.Children.Add(AddBlockAddItem());
+        }
+
+        private void BtnAddTest_Click(object sender, RoutedEventArgs e)
+        {
+            btnAddTest.Visibility = Visibility.Collapsed;
+            _stackPanel = spExpTest;
+            _stackPanel.Children.Add(AddBlockAddItem());
+        }
+
+        private StackPanel AddBlockAddItem()
+        {
+            StackPanel spTbAndBtn = new StackPanel() { Name = "spTbAndBtn", Margin = new Thickness(5, 5, 5, 5) };
+            StackPanel spBtn = new StackPanel() { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Center };
+            TextBox textBox = new TextBox() { Name = "tbSubject" };
+
+            Button btnSave = new Button() { Name = "btnSave", Content = "Сохранить", Width = 100, Margin = new Thickness(10, 10, 5, 10) };
+            Button btnCancel = new Button() { Name = "btnCancel", Content = "Отмена", Width = 100, Margin = new Thickness(10, 10, 5, 10) };
+
+            btnSave.Click += BtnSave_Click;
+            btnCancel.Click += BtnCancel_Click;
+
+            spBtn.Children.Add(btnSave);
+            spBtn.Children.Add(btnCancel);
+
+            spTbAndBtn.Children.Add(textBox);
+            spTbAndBtn.Children.Add(spBtn);
+
+           return spTbAndBtn;
+        }
+
+        private void RemoveBlockAddItem()
+        {
+            int posLastChild = _stackPanel.Children.Count;
+            _stackPanel.Children.RemoveAt(posLastChild - 1);
+        }
+
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            RemoveBlockAddItem();
+            _stackPanel.Children.OfType<Button>().Last().Visibility = Visibility.Visible;
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+
+            var rb = _stackPanel.Children.OfType<RadioButton>().Last();
+            RadioButton newRb = new RadioButton();
+            var tb = _stackPanel.Children.OfType<TextBox>().Last();
+            newRb.Content = tb.Text;
+
+            // добавить рб в коллекцию
+
+            RemoveBlockAddItem();
+            _stackPanel.Children.OfType<Button>().Last().Visibility = Visibility.Visible;
         }
     }
 }

@@ -8,67 +8,72 @@
       d:DesignHeight="500" d:DesignWidth="800"
       Title="PageCreateTest">
 
-    <Grid Background="LightGray">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition Height="3*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        
-        <Label FontSize="20" FontWeight="Bold"
+    <ScrollViewer>
+        <Grid Background="LightGray">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="3*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Label FontSize="20" FontWeight="Bold"
                Padding="10" Grid.Row="0">Создание теста</Label>
 
-        <Expander x:Name="expSubject" Collapsed="ExpSubject_Collapsed"
+            <Expander x:Name="expSubject" Collapsed="ExpSubject_Collapsed"
                   Header="Предмет" Grid.Row="1" Padding="10">
-            <StackPanel x:Name="spExpSubject">
-                <RadioButton>Программирование</RadioButton>
-                <RadioButton>Базы данных</RadioButton>
-                <Button>Добавить новый предмет</Button>
-            </StackPanel>
-        </Expander>
-        <Label x:Name="lbChoiceValExpSubject" Content="нет" Grid.Row="1" Grid.Column="1" Padding="10"/>
+                <StackPanel x:Name="spExpSubject">
+                    <RadioButton>Программирование</RadioButton>
+                    <RadioButton>Базы данных</RadioButton>
+                    <Button x:Name="btnAddSubject"
+                        Click="BtnAddSubject_Click">Добавить новый предмет</Button>
+                </StackPanel>
+            </Expander>
+            <Label x:Name="lbChoiceValExpSubject" Content="нет" Grid.Row="1" Grid.Column="1" Padding="10"/>
 
-        <Expander x:Name="expSection" Collapsed="ExpSection_Collapsed"
+            <Expander x:Name="expSection" Collapsed="ExpSection_Collapsed"
                   Header="Раздел" Grid.Row="2" Padding="10">
-            <StackPanel x:Name="spExpSection">
-                <RadioButton>Язык С</RadioButton>
-                <RadioButton>Язык С++</RadioButton>
-                <RadioButton>Язык С#</RadioButton>
-                <Button>Добавить новый раздел</Button>
-            </StackPanel>
-        </Expander>
-        <Label x:Name="lbChoiceValExpSection" Content="нет" Grid.Row="2" Grid.Column="1" Padding="10"/>
+                <StackPanel x:Name="spExpSection">
+                    <RadioButton>Язык С</RadioButton>
+                    <RadioButton>Язык С++</RadioButton>
+                    <RadioButton>Язык С#</RadioButton>
+                    <Button x:Name="btnAddSection"
+                            Click="BtnAddSection_Click">Добавить новый раздел</Button>
+                </StackPanel>
+            </Expander>
+            <Label x:Name="lbChoiceValExpSection" Content="нет" Grid.Row="2" Grid.Column="1" Padding="10"/>
 
-        <Expander x:Name="expTest" Collapsed="ExpTest_Collapsed"
+            <Expander x:Name="expTest" Collapsed="ExpTest_Collapsed"
                   Header="Название теста" Grid.Row="3" Padding="10">
-            <StackPanel x:Name="spExpTest">
-                <RadioButton>Базовые понятия</RadioButton>
-                <RadioButton>Функции</RadioButton>
-                <RadioButton>Классы</RadioButton>
-                <Button>Добавить новый раздел</Button>
-            </StackPanel>
-        </Expander>
-        <Label x:Name="lbChoiceValExpTest" Content="нет" Grid.Row="3" Grid.Column="1" Padding="10"/>
+                <StackPanel x:Name="spExpTest">
+                    <RadioButton>Базовые понятия</RadioButton>
+                    <RadioButton>Функции</RadioButton>
+                    <RadioButton>Классы</RadioButton>
+                    <Button x:Name="btnAddTest"
+                            Click="BtnAddTest_Click">Добавить новый тест</Button>
+                </StackPanel>
+            </Expander>
+            <Label x:Name="lbChoiceValExpTest" Content="нет" Grid.Row="3" Grid.Column="1" Padding="10"/>
 
-        <Expander Header="Вопросы теста" Grid.Row="4" Padding="10">
-            <StackPanel>
-                <RadioButton>Базовые понятия</RadioButton>
-                <RadioButton>Функции</RadioButton>
-                <RadioButton>Классы</RadioButton>
-                <Button>Добавить новый раздел</Button>
-            </StackPanel>
-        </Expander>
+            <Expander Header="Вопросы теста" Grid.Row="4" Padding="10">
+                <StackPanel>
+                    <RadioButton>Базовые понятия</RadioButton>
+                    <RadioButton>Функции</RadioButton>
+                    <RadioButton>Классы</RadioButton>
+                    <Button>Добавить новый раздел</Button>
+                </StackPanel>
+            </Expander>
 
-        <!--<GroupBox Height="150" Grid.Row="5" Grid.ColumnSpan="2" Margin="20">
+            <!--<GroupBox Height="150" Grid.Row="5" Grid.ColumnSpan="2" Margin="20">
             
         </GroupBox>-->
 
-    </Grid>
+        </Grid>
+    </ScrollViewer>
 </Page>
