@@ -16,7 +16,7 @@ namespace TestStudent.Pages
         public PageCreateTest()
         {
             InitializeComponent();
-            FillSUbject();
+            FillSubject();
         }
 
         private void ExpSubject_Collapsed(object sender, RoutedEventArgs e)
@@ -51,7 +51,7 @@ namespace TestStudent.Pages
             return null;
         }
 
-        private void FillSUbject()
+        private void FillSubject()
         {
             var subjects = MainWindow.db.GetSubjects();
 
@@ -90,10 +90,10 @@ namespace TestStudent.Pages
         {
             StackPanel spTbAndBtn = new StackPanel() { Name = "spTbAndBtn", Margin = new Thickness(5, 5, 5, 5) };
             StackPanel spBtn = new StackPanel() { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Center };
-            TextBox textBox = new TextBox(); //{ Name = "tbCommon" };
+            TextBox textBox = new TextBox();
 
+            // для доступа к textBox, сохраняем ссылку в статич поле (к StackPanel есть доступ по имени, TextBox нет!!!)
             _textBox = textBox;
-
 
             Button btnSave = new Button() { Name = "btnSave", Content = "Сохранить", Width = 100, Margin = new Thickness(10, 10, 5, 10) };
             Button btnCancel = new Button() { Name = "btnCancel", Content = "Отмена", Width = 100, Margin = new Thickness(10, 10, 5, 10) };
