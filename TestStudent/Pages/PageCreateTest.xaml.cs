@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using DbOperation.lib;
 
 namespace TestStudent.Pages
 {
@@ -21,10 +11,12 @@ namespace TestStudent.Pages
     public partial class PageCreateTest : Page
     {
         static StackPanel _stackPanel = null;
+        static TextBox _textBox = null;
 
         public PageCreateTest()
         {
             InitializeComponent();
+            FillSUbject();
         }
 
         private void ExpSubject_Collapsed(object sender, RoutedEventArgs e)
@@ -59,6 +51,20 @@ namespace TestStudent.Pages
             return null;
         }
 
+        private void FillSUbject()
+        {
+            var subjects = MainWindow.db.GetSubjects();
+
+            foreach (Subject item in subjects)
+            {
+                var rb = new RadioButton();
+                rb.Content = item.Name;
+
+                //var pos = spExpSection.Children.Count;
+                spExpSubject.Children.Insert(0, rb);
+            }
+        }
+
         private void BtnAddSubject_Click(object sender, RoutedEventArgs e)
         {
             btnAddSubject.Visibility = Visibility.Collapsed;
@@ -84,7 +90,10 @@ namespace TestStudent.Pages
         {
             StackPanel spTbAndBtn = new StackPanel() { Name = "spTbAndBtn", Margin = new Thickness(5, 5, 5, 5) };
             StackPanel spBtn = new StackPanel() { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Center };
-            TextBox textBox = new TextBox() { Name = "tbSubject" };
+            TextBox textBox = new TextBox(); //{ Name = "tbCommon" };
+
+            _textBox = textBox;
+
 
             Button btnSave = new Button() { Name = "btnSave", Content = "Сохранить", Width = 100, Margin = new Thickness(10, 10, 5, 10) };
             Button btnCancel = new Button() { Name = "btnCancel", Content = "Отмена", Width = 100, Margin = new Thickness(10, 10, 5, 10) };
@@ -98,7 +107,7 @@ namespace TestStudent.Pages
             spTbAndBtn.Children.Add(textBox);
             spTbAndBtn.Children.Add(spBtn);
 
-           return spTbAndBtn;
+            return spTbAndBtn;
         }
 
         private void RemoveBlockAddItem()
@@ -115,13 +124,14 @@ namespace TestStudent.Pages
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+            Subject subject = new Subject();
+            subject.Name = _textBox.Text;
+            MainWindow.db.AddSubject(subject);
 
-            var rb = _stackPanel.Children.OfType<RadioButton>().Last();
-            RadioButton newRb = new RadioButton();
-            var tb = _stackPanel.Children.OfType<TextBox>().Last();
-            newRb.Content = tb.Text;
-
-            // добавить рб в коллекцию
+            // для отображения и доступгости в текущем сеансе, т.к. заполнение контентом идет при загрузке страницы
+            var newRbtn = new RadioButton() { Content = subject.Name };
+            int pos = _stackPanel.Children.Count;
+            _stackPanel.Children.Insert(pos - 2, newRbtn);
 
             RemoveBlockAddItem();
             _stackPanel.Children.OfType<Button>().Last().Visibility = Visibility.Visible;

@@ -29,8 +29,7 @@
             <Expander x:Name="expSubject" Collapsed="ExpSubject_Collapsed"
                   Header="Предмет" Grid.Row="1" Padding="10">
                 <StackPanel x:Name="spExpSubject">
-                    <RadioButton>Программирование</RadioButton>
-                    <RadioButton>Базы данных</RadioButton>
+                    <Label></Label>
                     <Button x:Name="btnAddSubject"
                         Click="BtnAddSubject_Click">Добавить новый предмет</Button>
                 </StackPanel>
