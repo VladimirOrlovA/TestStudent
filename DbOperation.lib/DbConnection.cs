@@ -145,6 +145,54 @@ namespace DbOperation.lib
             }
         }
 
+        public string AddSection(Section obj)
+        {
+            try
+            {
+                using (var ldb = new LiteDatabase(Path))
+                {
+                    var objects = ldb.GetCollection<Section>("Section");
+
+                    Section searchObj = objects.FindOne(f => f.Name == obj.Name);
+
+                    if (searchObj == null)
+                        objects.Insert(obj);
+                    else
+                        return "Такая запись уже существует";
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return "Ошибка " + e;
+            }
+        }
+
+        public string AddTestName(TestName obj)
+        {
+            try
+            {
+                using (var ldb = new LiteDatabase(Path))
+                {
+                    var objects = ldb.GetCollection<TestName>("TestName");
+
+                    TestName searchObj = objects.FindOne(f => f.Name == obj.Name);
+
+                    if (searchObj == null)
+                        objects.Insert(obj);
+                    else
+                        return "Такая запись уже существует";
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return "Ошибка " + e;
+            }
+        }
+
+        //--------------------------------------------------------------------------------------------------------
+
         public List<Subject> GetSubjects()
         {
             List<Subject> objects = null;
@@ -152,6 +200,28 @@ namespace DbOperation.lib
             using (var ldb = new LiteDatabase(Path))
             {
                 objects = ldb.GetCollection<Subject>("Subject").FindAll().ToList();
+            }
+
+            return objects;
+        }
+        public List<Section> GetSection()
+        {
+            List<Section> objects = null;
+
+            using (var ldb = new LiteDatabase(Path))
+            {
+                objects = ldb.GetCollection<Section>("Section").FindAll().ToList();
+            }
+
+            return objects;
+        }
+        public List<TestName> GetTestName()
+        {
+            List<TestName> objects = null;
+
+            using (var ldb = new LiteDatabase(Path))
+            {
+                objects = ldb.GetCollection<TestName>("Subject").FindAll().ToList();
             }
 
             return objects;
@@ -191,5 +261,51 @@ namespace DbOperation.lib
                 return "Ошибка " + e;
             }
         }
+
+        public string DeleteSection(Section obj)
+        {
+            try
+            {
+                using (var ldb = new LiteDatabase(Path))
+                {
+                    var objects = ldb.GetCollection<Section>("Section");
+                    var objDb = objects.FindOne(f => f.Name == obj.Name);
+
+                    if (objDb != null && obj.Name == objDb.Name)
+                        objects.Delete(objDb.Id);
+                    else
+                        return "Ошибочный ввод";
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return "Ошибка " + e;
+            }
+        }
+
+        public string DeleteTestName(TestName obj)
+        {
+            try
+            {
+                using (var ldb = new LiteDatabase(Path))
+                {
+                    var objects = ldb.GetCollection<Subject>("TestName");
+                    var objDb = objects.FindOne(f => f.Name == obj.Name);
+
+                    if (objDb != null && obj.Name == objDb.Name)
+                        objects.Delete(objDb.Id);
+                    else
+                        return "Ошибочный ввод";
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return "Ошибка " + e;
+            }
+        }
+
+
     }
 }

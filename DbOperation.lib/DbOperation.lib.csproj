@@ -46,6 +46,7 @@
     <Compile Include="DbConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LoggedHistory.cs" />
+    <Compile Include="TestName.cs" />
     <Compile Include="Section.cs" />
     <Compile Include="Subject.cs" />
     <Compile Include="User.cs" />

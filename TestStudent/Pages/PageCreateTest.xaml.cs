@@ -16,7 +16,7 @@ namespace TestStudent.Pages
         public PageCreateTest()
         {
             InitializeComponent();
-            FillSubject();
+            FillContentFromDB();
 
             var obj = mainGridCont.Children.OfType<Expander>();
             foreach (Expander item in obj)
@@ -67,9 +67,11 @@ namespace TestStudent.Pages
             return null;
         }
 
-        private void FillSubject()
+        private void FillContentFromDB()
         {
             var subjects = MainWindow.db.GetSubjects();
+            var sections = MainWindow.db.GetSection();
+            var testNames = MainWindow.db.GetTestName();
 
             foreach (Subject item in subjects)
             {
@@ -78,6 +80,24 @@ namespace TestStudent.Pages
 
                 //var pos = spExpSection.Children.Count;
                 spExpSubject.Children.Insert(0, rb);
+            }
+
+            foreach (Section item in sections)
+            {
+                var rb = new RadioButton();
+                rb.Content = item.Name;
+
+                //var pos = spExpSection.Children.Count;
+                spExpSection.Children.Insert(0, rb);
+            }
+
+            foreach (TestName item in testNames)
+            {
+                var rb = new RadioButton();
+                rb.Content = item.Name;
+
+                //var pos = spExpSection.Children.Count;
+                spExpTest.Children.Insert(0, rb);
             }
         }
 
@@ -95,10 +115,10 @@ namespace TestStudent.Pages
             _stackPanel.Children.Add(AddBlockEdit());
         }
 
-        private void BtnAddTest_Click(object sender, RoutedEventArgs e)
+        private void BtnEditTest_Click(object sender, RoutedEventArgs e)
         {
-            btnAddTest.Visibility = Visibility.Collapsed;
             _stackPanel = spExpTest;
+            _stackPanel.Children.OfType<Button>().Last().Visibility = Visibility.Collapsed;
             _stackPanel.Children.Add(AddBlockEdit());
         }
 
@@ -159,12 +179,19 @@ namespace TestStudent.Pages
                 errMes = MainWindow.db.AddSubject(obj);
             }
 
-            //if (_stackPanel.Name == "expSection")
-            //{
-            //    Section obj = new Section();
-            //    obj.Name = _textBox.Text;
-            //    errMes = MainWindow.db.AddSection(obj);
-            //}
+            if (_stackPanel.Name == "spExpSection")
+            {
+                Section obj = new Section();
+                obj.Name = _textBox.Text;
+                errMes = MainWindow.db.AddSection(obj);
+            }
+
+            if (_stackPanel.Name == "spExpTest")
+            {
+                TestName obj = new TestName();
+                obj.Name = _textBox.Text;
+                errMes = MainWindow.db.AddTestName(obj);
+            }
 
             if (errMes == null)
             {
@@ -197,12 +224,19 @@ namespace TestStudent.Pages
                 errMes = MainWindow.db.DeleteSubject(obj);
             }
 
-            //if (_stackPanel.Name == "expSection")
-            //{
-            //    Section obj = new Section();
-            //    obj.Name = _textBox.Text;
-            //    errMes = MainWindow.db.DeleteSection(obj);
-            //}
+            if (_stackPanel.Name == "spExpSection")
+            {
+                Section obj = new Section();
+                obj.Name = _textBox.Text;
+                errMes = MainWindow.db.DeleteSection(obj);
+            }
+
+            if (_stackPanel.Name == "spExpTest")
+            {
+                Section obj = new Section();
+                obj.Name = _textBox.Text;
+                errMes = MainWindow.db.DeleteSection(obj);
+            }
 
             if (errMes == null)
             {

@@ -46,10 +46,7 @@
                   Header="Название теста" Grid.Row="3" Padding="10">
                 <StackPanel x:Name="spExpTest">
                     <RadioButton>Базовые понятия</RadioButton>
-                    <RadioButton>Функции</RadioButton>
-                    <RadioButton>Классы</RadioButton>
-                    <Button x:Name="btnAddTest"
-                            Click="BtnAddTest_Click">Добавить новый тест</Button>
+                    <Button Click="BtnEditTest_Click">изменить</Button>
                 </StackPanel>
             </Expander>
             <Label x:Name="lbChoiceValExpTest" Content="нет" Grid.Row="3" Grid.Column="1" Padding="10"/>
