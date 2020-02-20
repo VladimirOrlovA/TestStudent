@@ -81,28 +81,28 @@ namespace TestStudent.Pages
             }
         }
 
-        private void BtnAddSubject_Click(object sender, RoutedEventArgs e)
+        private void BtnEditSubject_Click(object sender, RoutedEventArgs e)
         {
-            btnAddSubject.Visibility = Visibility.Collapsed;
             _stackPanel = spExpSubject;
-            _stackPanel.Children.Add(AddBlockAddItem());
+            _stackPanel.Children.OfType<Button>().Last().Visibility = Visibility.Collapsed;
+            _stackPanel.Children.Add(AddBlockEdit());
         }
 
-        private void BtnAddSection_Click(object sender, RoutedEventArgs e)
+        private void BtnEditSection_Click(object sender, RoutedEventArgs e)
         {
-            btnAddSection.Visibility = Visibility.Collapsed;
             _stackPanel = spExpSection;
-            _stackPanel.Children.Add(AddBlockAddItem());
+            _stackPanel.Children.OfType<Button>().Last().Visibility = Visibility.Collapsed;
+            _stackPanel.Children.Add(AddBlockEdit());
         }
 
         private void BtnAddTest_Click(object sender, RoutedEventArgs e)
         {
             btnAddTest.Visibility = Visibility.Collapsed;
             _stackPanel = spExpTest;
-            _stackPanel.Children.Add(AddBlockAddItem());
+            _stackPanel.Children.Add(AddBlockEdit());
         }
 
-        private StackPanel AddBlockAddItem()
+        private StackPanel AddBlockEdit()
         {
             StackPanel spTbAndBtn = new StackPanel() { Name = "spTbAndBtn", Margin = new Thickness(5, 5, 5, 5) };
             StackPanel spBtn = new StackPanel() { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Center };
@@ -112,12 +112,15 @@ namespace TestStudent.Pages
             _textBox = textBox;
 
             Button btnSave = new Button() { Name = "btnSave", Content = "Сохранить", Width = 100, Margin = new Thickness(10, 10, 5, 10) };
+            Button btnDelete = new Button() { Name = "btnDelete", Content = "Удалить", Width = 100, Margin = new Thickness(10, 10, 5, 10) };
             Button btnCancel = new Button() { Name = "btnCancel", Content = "Отмена", Width = 100, Margin = new Thickness(10, 10, 5, 10) };
 
             btnSave.Click += BtnSave_Click;
+            btnDelete.Click += BtnDelete_Click;
             btnCancel.Click += BtnCancel_Click;
 
             spBtn.Children.Add(btnSave);
+            spBtn.Children.Add(btnDelete);
             spBtn.Children.Add(btnCancel);
 
             spTbAndBtn.Children.Add(textBox);
@@ -126,7 +129,7 @@ namespace TestStudent.Pages
             return spTbAndBtn;
         }
 
-        private void RemoveBlockAddItem()
+        private void RemoveBlockEdit()
         {
             int posLastChild = _stackPanel.Children.Count;
             _stackPanel.Children.RemoveAt(posLastChild - 1);
@@ -134,25 +137,86 @@ namespace TestStudent.Pages
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            RemoveBlockAddItem();
+            RemoveBlockEdit();
             _stackPanel.Children.OfType<Button>().Last().Visibility = Visibility.Visible;
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            Subject subject = new Subject();
-            subject.Name = _textBox.Text;
+            string errMes = null;
 
-            string errMes = MainWindow.db.AddSubject(subject);
+            if (string.IsNullOrWhiteSpace(_textBox.Text))
+            {
+                MessageBox.Show("Вы ничего не ввели");
+                return;
+            }
+
+
+            if (_stackPanel.Name == "spExpSubject")
+            {
+                Subject obj = new Subject();
+                obj.Name = _textBox.Text;
+                errMes = MainWindow.db.AddSubject(obj);
+            }
+
+            //if (_stackPanel.Name == "expSection")
+            //{
+            //    Section obj = new Section();
+            //    obj.Name = _textBox.Text;
+            //    errMes = MainWindow.db.AddSection(obj);
+            //}
 
             if (errMes == null)
             {
                 // для отображения и доступности в текущем сеансе, т.к. заполнение контентом идет при загрузке страницы
-                var newRbtn = new RadioButton() { Content = subject.Name };
+                var newRbtn = new RadioButton() { Content = _textBox.Text };
                 int pos = _stackPanel.Children.Count;
                 _stackPanel.Children.Insert(pos - 2, newRbtn);
 
-                RemoveBlockAddItem();
+                RemoveBlockEdit();
+                _stackPanel.Children.OfType<Button>().Last().Visibility = Visibility.Visible;
+            }
+            else MessageBox.Show(errMes);
+        }
+
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            string errMes = null;
+
+            if (string.IsNullOrWhiteSpace(_textBox.Text))
+            {
+                MessageBox.Show("Вы ничего не ввели");
+                return;
+            }
+
+
+            if (_stackPanel.Name == "spExpSubject")
+            {
+                Subject obj = new Subject();
+                obj.Name = _textBox.Text;
+                errMes = MainWindow.db.DeleteSubject(obj);
+            }
+
+            //if (_stackPanel.Name == "expSection")
+            //{
+            //    Section obj = new Section();
+            //    obj.Name = _textBox.Text;
+            //    errMes = MainWindow.db.DeleteSection(obj);
+            //}
+
+            if (errMes == null)
+            {
+                // скрываем визуальную часть в текущем сеансе, т.к. заполнение контентом идет при загрузке страницы
+                var newRbtn = new RadioButton() { Content = _textBox.Text };
+                var rbCol = _stackPanel.Children.OfType<RadioButton>();
+
+                foreach(RadioButton rbItem in rbCol)
+                {
+                    if ((string)rbItem.Content == _textBox.Text)
+                        rbItem.Visibility = Visibility.Collapsed;
+                }
+
+                RemoveBlockEdit();
                 _stackPanel.Children.OfType<Button>().Last().Visibility = Visibility.Visible;
             }
             else MessageBox.Show(errMes);

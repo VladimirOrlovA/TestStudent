@@ -29,9 +29,7 @@
             <Expander x:Name="expSubject" Collapsed="ExpSubject_Collapsed"
                   Header="Предмет" Grid.Row="1" Padding="10">
                 <StackPanel x:Name="spExpSubject">
-                    <Label></Label>
-                    <Button x:Name="btnAddSubject"
-                        Click="BtnAddSubject_Click">Добавить новый предмет</Button>
+                    <Button Click="BtnEditSubject_Click">изменить</Button>
                 </StackPanel>
             </Expander>
             <Label x:Name="lbChoiceValExpSubject" Content="нет" Grid.Row="1" Grid.Column="1" Padding="10"/>
@@ -39,11 +37,7 @@
             <Expander x:Name="expSection" Collapsed="ExpSection_Collapsed"
                   Header="Раздел" Grid.Row="2" Padding="10">
                 <StackPanel x:Name="spExpSection">
-                    <RadioButton>Язык С</RadioButton>
-                    <RadioButton>Язык С++</RadioButton>
-                    <RadioButton>Язык С#</RadioButton>
-                    <Button x:Name="btnAddSection"
-                            Click="BtnAddSection_Click">Добавить новый раздел</Button>
+                    <Button Click="BtnEditSection_Click">изменить</Button>
                 </StackPanel>
             </Expander>
             <Label x:Name="lbChoiceValExpSection" Content="нет" Grid.Row="2" Grid.Column="1" Padding="10"/>

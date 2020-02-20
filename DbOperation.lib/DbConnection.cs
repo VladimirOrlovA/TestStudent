@@ -122,18 +122,18 @@ namespace DbOperation.lib
 
         //--------------------------------------------------------------------------------------------------------
 
-        public string AddSubject(Subject newsubject)
+        public string AddSubject(Subject obj)
         {
             try
             {
                 using (var ldb = new LiteDatabase(Path))
                 {
-                    var subjects = ldb.GetCollection<Subject>("Subject");
+                    var objects = ldb.GetCollection<Subject>("Subject");
 
-                    Subject searchTest = subjects.FindOne(f => f.Name == newsubject.Name);
+                    Subject searchObj = objects.FindOne(f => f.Name == obj.Name);
 
-                    if (searchTest == null)
-                        subjects.Insert(newsubject);
+                    if (searchObj == null)
+                        objects.Insert(obj);
                     else
                         return "Такая запись уже существует";
                 }
@@ -147,25 +147,49 @@ namespace DbOperation.lib
 
         public List<Subject> GetSubjects()
         {
-            List<Subject> subjects = null;
+            List<Subject> objects = null;
 
             using (var ldb = new LiteDatabase(Path))
             {
-                subjects = ldb.GetCollection<Subject>("Subject").FindAll().ToList();
+                objects = ldb.GetCollection<Subject>("Subject").FindAll().ToList();
             }
 
-            return subjects;
+            return objects;
         }
 
         public Subject GetSubjectById(int subjectId)
         {
-            Subject subject = null;
+            Subject obj = null;
 
             using (var ldb = new LiteDatabase(Path))
             {
-                subject = ldb.GetCollection<Subject>("Subject").FindById(subjectId);
-                return subject;
+                obj = ldb.GetCollection<Subject>("Subject").FindById(subjectId);
+                return obj;
             }
         }
-    }  
+
+        //--------------------------------------------------------------------------------------------------------
+
+        public string DeleteSubject(Subject obj)
+        {
+            try
+            {
+                using (var ldb = new LiteDatabase(Path))
+                {
+                    var objects = ldb.GetCollection<Subject>("Subject");
+                    var objDb = objects.FindOne(f => f.Name == obj.Name);
+
+                    if (objDb != null && obj.Name == objDb.Name)
+                        objects.Delete(objDb.Id);
+                    else
+                        return "Ошибочный ввод";
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return "Ошибка " + e;
+            }
+        }
+    }
 }
