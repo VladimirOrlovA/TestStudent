@@ -29,7 +29,9 @@ namespace TestStudent.Pages
                     MainWindow.db.AddLoggedHistory(MainWindow.user);
 
                     // переход в профиль пользователя
-                    MainWindow._MainFrame.Navigate(new PageUserProfile());
+                    //MainWindow._MainFrame.Navigate(new PageUserProfile());
+
+                    MainWindow._MainFrame.Navigate(null);
 
                     MenuBox.Menu();
                 }

@@ -233,9 +233,9 @@ namespace TestStudent.Pages
 
             if (_stackPanel.Name == "spExpTest")
             {
-                Section obj = new Section();
+                TestName obj = new TestName();
                 obj.Name = _textBox.Text;
-                errMes = MainWindow.db.DeleteSection(obj);
+                errMes = MainWindow.db.DeleteTestName(obj);
             }
 
             if (errMes == null)

@@ -45,7 +45,6 @@
             <Expander x:Name="expTest" Collapsed="ExpTest_Collapsed"
                   Header="Название теста" Grid.Row="3" Padding="10">
                 <StackPanel x:Name="spExpTest">
-                    <RadioButton>Базовые понятия</RadioButton>
                     <Button Click="BtnEditTest_Click">изменить</Button>
                 </StackPanel>
             </Expander>

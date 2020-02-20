@@ -221,7 +221,7 @@ namespace DbOperation.lib
 
             using (var ldb = new LiteDatabase(Path))
             {
-                objects = ldb.GetCollection<TestName>("Subject").FindAll().ToList();
+                objects = ldb.GetCollection<TestName>("TestName").FindAll().ToList();
             }
 
             return objects;
