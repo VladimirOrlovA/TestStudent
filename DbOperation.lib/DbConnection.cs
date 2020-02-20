@@ -122,7 +122,7 @@ namespace DbOperation.lib
 
         //--------------------------------------------------------------------------------------------------------
 
-        public string AddSubject(Subject newSubject)
+        public string AddSubject(Subject newsubject)
         {
             try
             {
@@ -130,10 +130,10 @@ namespace DbOperation.lib
                 {
                     var subjects = ldb.GetCollection<Subject>("Subject");
 
-                    Subject searchUser = subjects.FindOne(f => f.Name == newSubject.Name);
+                    Subject searchTest = subjects.FindOne(f => f.Name == newsubject.Name);
 
-                    if (searchUser == null)
-                        subjects.Insert(newSubject);
+                    if (searchTest == null)
+                        subjects.Insert(newsubject);
                     else
                         return "Такая запись уже существует";
                 }
@@ -167,6 +167,5 @@ namespace DbOperation.lib
                 return subject;
             }
         }
-
     }  
 }

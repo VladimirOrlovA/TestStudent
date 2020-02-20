@@ -35,7 +35,6 @@ namespace TestStudent.Pages
                     item.IsExpanded = false;
             }
         }
-
         private void ExpSubject_Collapsed(object sender, RoutedEventArgs e)
         {
             lbChoiceValExpSubject.Content = GetValRadioButton(spExpSubject.Children);
