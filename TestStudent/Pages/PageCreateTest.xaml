@@ -9,7 +9,7 @@
       Title="PageCreateTest">
 
     <ScrollViewer>
-        <Grid Background="LightGray">
+        <Grid x:Name="mainGridCont"   Background="LightGray">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition></RowDefinition>

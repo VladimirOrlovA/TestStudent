@@ -17,6 +17,23 @@ namespace TestStudent.Pages
         {
             InitializeComponent();
             FillSubject();
+
+            var obj = mainGridCont.Children.OfType<Expander>();
+            foreach (Expander item in obj)
+            {
+                item.Expanded += Item_Expanded;
+            }
+        }
+
+        private void Item_Expanded(object sender, RoutedEventArgs e)
+        {
+            var obj = mainGridCont.Children.OfType<Expander>();
+
+            foreach (Expander item in obj)
+            {
+                if (item != (sender as Expander))
+                    item.IsExpanded = false;
+            }
         }
 
         private void ExpSubject_Collapsed(object sender, RoutedEventArgs e)
