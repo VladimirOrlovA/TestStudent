@@ -57,7 +57,7 @@ namespace TestStudent.Pages
         {
 
             lbQuestionCount.Content = 20;
-            lbChoiceValExpQuestion.Content = lbQuestionCount.Content.ToString();
+            lbChoiceValExpQuestion.Content = lbQuestionCount.Content.ToString(); 
             LabelChoiceCheck();
         }
 
