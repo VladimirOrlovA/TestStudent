@@ -23,41 +23,50 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Label FontSize="20" FontWeight="Bold"
-               Padding="10" Grid.Row="0">Создание теста</Label>
 
+            
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Vertical">
+                <Label FontSize="20" FontWeight="Bold" Grid.Row="0"
+                       Padding="20" >Создание теста</Label>
+                <ProgressBar x:Name="PbFullComlete" Orientation="Horizontal"
+                         Height="10" IsIndeterminate="False"
+                         Minimum="0" Maximum="4" Margin="10" ></ProgressBar>
+            </StackPanel>
+            
             <Expander x:Name="expSubject" Collapsed="ExpSubject_Collapsed"
                   Header="Предмет" Grid.Row="1" Padding="10">
-                <StackPanel x:Name="spExpSubject">
+                <StackPanel x:Name="spExpSubject" Margin="25 0">
                     <Button Click="BtnEditSubject_Click">изменить</Button>
                 </StackPanel>
             </Expander>
-            <Label x:Name="lbChoiceValExpSubject" Content="нет" Grid.Row="1" Grid.Column="1" Padding="10"/>
+            <Label x:Name="lbChoiceValExpSubject" Content="" Grid.Row="1" Grid.Column="1" Padding="10"/>
 
             <Expander x:Name="expSection" Collapsed="ExpSection_Collapsed"
                   Header="Раздел" Grid.Row="2" Padding="10">
-                <StackPanel x:Name="spExpSection">
+                <StackPanel x:Name="spExpSection" Margin="25 0">
                     <Button Click="BtnEditSection_Click">изменить</Button>
                 </StackPanel>
             </Expander>
-            <Label x:Name="lbChoiceValExpSection" Content="нет" Grid.Row="2" Grid.Column="1" Padding="10"/>
+            <Label x:Name="lbChoiceValExpSection" Content="" Grid.Row="2" Grid.Column="1" Padding="10"/>
 
             <Expander x:Name="expTest" Collapsed="ExpTest_Collapsed"
                   Header="Название теста" Grid.Row="3" Padding="10">
-                <StackPanel x:Name="spExpTest">
+                <StackPanel x:Name="spExpTest" Margin="25 0">
                     <Button Click="BtnEditTest_Click">изменить</Button>
                 </StackPanel>
             </Expander>
-            <Label x:Name="lbChoiceValExpTest" Content="нет" Grid.Row="3" Grid.Column="1" Padding="10"/>
+            <Label x:Name="lbChoiceValExpTest" Content="" Grid.Row="3" Grid.Column="1" Padding="10"/>
 
-            <Expander Header="Вопросы теста" Grid.Row="4" Padding="10">
-                <StackPanel>
-                    <RadioButton>Базовые понятия</RadioButton>
-                    <RadioButton>Функции</RadioButton>
-                    <RadioButton>Классы</RadioButton>
-                    <Button>Добавить новый раздел</Button>
+            <Expander x:Name="expQuestion" Collapsed="ExpQuestion_Collapsed"
+                Header="Вопросы теста" Grid.Row="4" Padding="10">
+                <StackPanel x:Name="spQuestion" Margin="25 0">
+                    <Label Content="Вопросов в тесте " x:Name="lbQuestionCount" Padding="0 0 0 20"/>
+                    <Slider Value="0" Minimum="0" Maximum="50" SelectionStart="0" Height="30"  
+                            IsSelectionRangeEnabled="True" Ticks="2" TickFrequency="50" IsSnapToTickEnabled="True"/>    
                 </StackPanel>
             </Expander>
+            <Label x:Name="lbChoiceValExpQuestion" Content="" Grid.Row="4" Grid.Column="1" Padding="10"/>
+
 
             <!--<GroupBox Height="150" Grid.Row="5" Grid.ColumnSpan="2" Margin="20">
             

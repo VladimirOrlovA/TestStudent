@@ -38,17 +38,41 @@ namespace TestStudent.Pages
         private void ExpSubject_Collapsed(object sender, RoutedEventArgs e)
         {
             lbChoiceValExpSubject.Content = GetValRadioButton(spExpSubject.Children);
+            LabelChoiceCheck();
         }
 
         private void ExpSection_Collapsed(object sender, RoutedEventArgs e)
         {
             lbChoiceValExpSection.Content = GetValRadioButton(spExpSection.Children);
+            LabelChoiceCheck();
         }
 
         private void ExpTest_Collapsed(object sender, RoutedEventArgs e)
         {
             lbChoiceValExpTest.Content = GetValRadioButton(spExpTest.Children);
+            LabelChoiceCheck();
         }
+
+        private void ExpQuestion_Collapsed(object sender, RoutedEventArgs e)
+        {
+
+            lbQuestionCount.Content = 20;
+            lbChoiceValExpQuestion.Content = lbQuestionCount.Content.ToString();
+            LabelChoiceCheck();
+        }
+
+        private void LabelChoiceCheck()
+        {
+            int countChoised = 0;
+            var lbCol = mainGridCont.Children.OfType<Label>();
+            foreach(Label lb in lbCol)
+            {
+                if (!string.IsNullOrEmpty((string)lb.Content))
+                    countChoised++;
+            }
+            PbFullComlete.Value = countChoised;
+        }
+
 
         private string GetValRadioButton(UIElementCollection uIElementCollection)
         {
@@ -59,9 +83,7 @@ namespace TestStudent.Pages
                     var rb = item as RadioButton;
 
                     if ((bool)rb.IsChecked)
-                    {
                         return (string)rb.Content;
-                    }
                 }
             }
             return null;
@@ -131,9 +153,9 @@ namespace TestStudent.Pages
             // для доступа к textBox, сохраняем ссылку в статич поле (к StackPanel есть доступ по имени, TextBox нет!!!)
             _textBox = textBox;
 
-            Button btnSave = new Button() { Name = "btnSave", Content = "Сохранить", Width = 100, Margin = new Thickness(10, 10, 5, 10) };
-            Button btnDelete = new Button() { Name = "btnDelete", Content = "Удалить", Width = 100, Margin = new Thickness(10, 10, 5, 10) };
-            Button btnCancel = new Button() { Name = "btnCancel", Content = "Отмена", Width = 100, Margin = new Thickness(10, 10, 5, 10) };
+            Button btnSave = new Button() { Name = "btnSave", Content = "Сохранить", Width = 85, Margin = new Thickness(0, 10, 0, 10) };
+            Button btnDelete = new Button() { Name = "btnDelete", Content = "Удалить", Width = 85, Margin = new Thickness(5, 10, 0, 10) };
+            Button btnCancel = new Button() { Name = "btnCancel", Content = "Отмена", Width = 70, Margin = new Thickness(5, 10, 0, 10) };
 
             btnSave.Click += BtnSave_Click;
             btnDelete.Click += BtnDelete_Click;
@@ -255,5 +277,6 @@ namespace TestStudent.Pages
             }
             else MessageBox.Show(errMes);
         }
+
     }
 }

@@ -18,7 +18,7 @@
                      KeyDown="TbInputLogin_KeyDown"
                      LostFocus="TbInputLogin_LostFocus"
                      FontFamily="Bahnschrift Light Condensed"
-                     Text="user1"/>
+                     Text="admin"/>
         <Label x:Name="LbInputLoginErrMess" HorizontalAlignment="Center" Height="30"/>
 
         <Label HorizontalAlignment="Center" FontSize="18" Margin="0"
