@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using DbOperation.lib;
@@ -55,8 +56,6 @@ namespace TestStudent.Pages
 
         private void ExpQuestion_Collapsed(object sender, RoutedEventArgs e)
         {
-            lbQuestionCount.Content = "Вопросов в тесте " + 20;
-            lbChoiceValExpQuestion.Content = lbQuestionCount.Content; /// .ToString(); 
             LabelChoiceCheck();
         }
 
@@ -64,12 +63,22 @@ namespace TestStudent.Pages
         {
             int countChoised = 0;
             var lbCol = mainGridCont.Children.OfType<Label>();
-            foreach(Label lb in lbCol)
+            foreach (Label lb in lbCol)
             {
                 if (!string.IsNullOrEmpty((string)lb.Content))
                     countChoised++;
             }
             PbFullComlete.Value = countChoised;
+
+            if (PbFullComlete.Value < 3)
+            {
+                lbQuestionCount.Content = "Пока рано, выбрать еще " + (3 - PbFullComlete.Value);
+                return;
+            }
+
+            List<Question> questionsDB = MainWindow.db.GetQuestion();
+            lbQuestionCount.Content = "Вопросов в тесте " + questionsDB.Count();
+            lbChoiceValExpQuestion.Content = lbQuestionCount.Content;
         }
 
         private string GetValRadioButton(UIElementCollection uIElementCollection)
@@ -141,6 +150,16 @@ namespace TestStudent.Pages
             _stackPanel = spExpTest;
             _stackPanel.Children.OfType<Button>().Last().Visibility = Visibility.Collapsed;
             _stackPanel.Children.Add(AddBlockEdit());
+        }
+
+        private void BtnEditQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            List<Question> questionsDB = MainWindow.db.GetQuestion();
+
+            //questionsDB[0].
+
+
+            tbQuestionEdit.Visibility = Visibility.Visible;
         }
 
         private StackPanel AddBlockEdit()
@@ -265,7 +284,7 @@ namespace TestStudent.Pages
                 var newRbtn = new RadioButton() { Content = _textBox.Text };
                 var rbCol = _stackPanel.Children.OfType<RadioButton>();
 
-                foreach(RadioButton rbItem in rbCol)
+                foreach (RadioButton rbItem in rbCol)
                 {
                     if ((string)rbItem.Content == _textBox.Text)
                         rbItem.Visibility = Visibility.Collapsed;
@@ -277,15 +296,20 @@ namespace TestStudent.Pages
             else MessageBox.Show(errMes);
         }
 
-        private void BtnAddQuestion_Click(object sender, RoutedEventArgs e)
+
+        private void BtnQuestionSave_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void BtnDleteQuestion_Click(object sender, RoutedEventArgs e)
+        private void BtnQuestionDelete_Click(object sender, RoutedEventArgs e)
         {
 
         }
-        
+
+        private void BtnQuestionCancel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
