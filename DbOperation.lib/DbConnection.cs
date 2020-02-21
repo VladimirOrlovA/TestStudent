@@ -191,6 +191,29 @@ namespace DbOperation.lib
             }
         }
 
+        public string AddQuestion(Question obj)
+        {
+            try
+            {
+                using (var ldb = new LiteDatabase(Path))
+                {
+                    var objects = ldb.GetCollection<Question>("Question");
+
+                    Question searchObj = objects.FindOne(f => f.Id == obj.Id);
+
+                    if (searchObj == null)
+                        objects.Insert(obj);
+                    else
+                        return "Такая запись уже существует";
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return "Ошибка " + e;
+            }
+        }
+
         //--------------------------------------------------------------------------------------------------------
 
         public List<Subject> GetSubjects()
@@ -222,6 +245,17 @@ namespace DbOperation.lib
             using (var ldb = new LiteDatabase(Path))
             {
                 objects = ldb.GetCollection<TestName>("TestName").FindAll().ToList();
+            }
+
+            return objects;
+        }
+        public List<Question> GetQuestion()
+        {
+            List<Question> objects = null;
+
+            using (var ldb = new LiteDatabase(Path))
+            {
+                objects = ldb.GetCollection<Question>("Question").FindAll().ToList();
             }
 
             return objects;
@@ -290,10 +324,32 @@ namespace DbOperation.lib
             {
                 using (var ldb = new LiteDatabase(Path))
                 {
-                    var objects = ldb.GetCollection<Subject>("TestName");
+                    var objects = ldb.GetCollection<TestName>("TestName");
                     var objDb = objects.FindOne(f => f.Name == obj.Name);
 
                     if (objDb != null && obj.Name == objDb.Name)
+                        objects.Delete(objDb.Id);
+                    else
+                        return "Ошибочный ввод";
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return "Ошибка " + e;
+            }
+        }
+
+        public string DeleteQuestion(Question obj)
+        {
+            try
+            {
+                using (var ldb = new LiteDatabase(Path))
+                {
+                    var objects = ldb.GetCollection<Question>("Question");
+                    var objDb = objects.FindOne(f => f.Id == obj.Id);
+
+                    if (objDb != null && obj.Id == objDb.Id)
                         objects.Delete(objDb.Id);
                     else
                         return "Ошибочный ввод";

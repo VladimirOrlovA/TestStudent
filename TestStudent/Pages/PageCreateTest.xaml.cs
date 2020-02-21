@@ -55,9 +55,8 @@ namespace TestStudent.Pages
 
         private void ExpQuestion_Collapsed(object sender, RoutedEventArgs e)
         {
-
-            lbQuestionCount.Content = 20;
-            lbChoiceValExpQuestion.Content = lbQuestionCount.Content.ToString(); 
+            lbQuestionCount.Content = "Вопросов в тесте " + 20;
+            lbChoiceValExpQuestion.Content = lbQuestionCount.Content; /// .ToString(); 
             LabelChoiceCheck();
         }
 
@@ -72,7 +71,6 @@ namespace TestStudent.Pages
             }
             PbFullComlete.Value = countChoised;
         }
-
 
         private string GetValRadioButton(UIElementCollection uIElementCollection)
         {
@@ -94,6 +92,7 @@ namespace TestStudent.Pages
             var subjects = MainWindow.db.GetSubjects();
             var sections = MainWindow.db.GetSection();
             var testNames = MainWindow.db.GetTestName();
+            //var question = MainWindow.db.GetQuestion();  //////////////////////////////////////////////////// 
 
             foreach (Subject item in subjects)
             {
@@ -278,5 +277,15 @@ namespace TestStudent.Pages
             else MessageBox.Show(errMes);
         }
 
+        private void BtnAddQuestion_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnDleteQuestion_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        
     }
 }

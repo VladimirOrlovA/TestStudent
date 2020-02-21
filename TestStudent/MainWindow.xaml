@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestStudent"
         mc:Ignorable="d"
-        Title="Test Students" MinHeight="600" Height="600" MinWidth="700" Width="700">
+        Title="Test Students" MinHeight="800" Height="800" MinWidth="700" Width="700">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="C:\Users\Vladimir\source\repos\TestStudent\TestStudent\Images\test01.jpg"/>

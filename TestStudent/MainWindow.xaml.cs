@@ -27,9 +27,9 @@ namespace TestStudent
             _MainFrame = MainFrame;
             _MainMenu = MainMenu;
 
-            MainWindow._MainFrame.Navigate(StartFirstPage());
+            //MainWindow._MainFrame.Navigate(StartFirstPage());
 
-            //MainWindow._MainFrame.Navigate(DebugPage());
+            MainWindow._MainFrame.Navigate(DebugPage());
         }
 
         public static Page StartFirstPage()
