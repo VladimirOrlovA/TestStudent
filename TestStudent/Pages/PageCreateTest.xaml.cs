@@ -76,6 +76,7 @@ namespace TestStudent.Pages
                 return;
             }
 
+            // придумать способ достать кол-во записей по проще, не вытаскивая все записи из БД !!!!!!!!!!!!!!!!
             List<Question> questionsDB = MainWindow.db.GetQuestion();
             lbQuestionCount.Content = "Вопросов в тесте " + questionsDB.Count();
             lbChoiceValExpQuestion.Content = lbQuestionCount.Content;
@@ -156,7 +157,10 @@ namespace TestStudent.Pages
         {
             List<Question> questionsDB = MainWindow.db.GetQuestion();
 
-            //questionsDB[0].
+            List<Question> qq = questionsDB.FindAll(f => 
+                    f.SubjectName == (string)lbChoiceValExpSubject.Content &&
+                    f.SectionName == (string)lbChoiceValExpSection.Content &&
+                    f.TestName == (string)lbChoiceValExpTest.Content);
 
 
             tbQuestionEdit.Visibility = Visibility.Visible;

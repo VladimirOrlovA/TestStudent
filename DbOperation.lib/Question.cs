@@ -9,10 +9,10 @@ namespace DbOperation.lib
     public class Question
     {
         public int Id { get; set; }
-        public int SubjectId { get; set; }
-        public int SectionId { get; set; }
-        public int TestName { get; set; }
-        public string Text { get; set; }
+        public string SubjectName { get; set; }
+        public string SectionName { get; set; }
+        public string TestName { get; set; }
+        public string TestDescription { get; set; }
 
         public List<Answer> variant = new List<Answer>();
     }
