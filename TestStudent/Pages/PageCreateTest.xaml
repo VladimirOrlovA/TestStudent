@@ -60,8 +60,8 @@
             <Expander x:Name="expQuestion" Collapsed="ExpQuestion_Collapsed" 
                 Header="Вопросы теста" Grid.Row="4" Grid.ColumnSpan="2" Padding="10 10 0 0">
                 <StackPanel  Orientation="Horizontal">
-                    <Label x:Name="lbQuestionCount" Width="250"/>
-                    <Button Content="Изменить" x:Name="btnEditQuestion" 
+                    <Label x:Name="lbQuestionCount" Content="Пока рано, выбрать еще 3" Width="250"/>
+                    <Button Content="Изменить" x:Name="btnEditQuestion" IsEnabled="False"
                             Click="BtnEditQuestion_Click" Height="25" Width="100"  Margin="5 0"/>
                 </StackPanel>
             </Expander>

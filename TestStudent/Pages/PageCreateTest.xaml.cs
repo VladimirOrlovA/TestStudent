@@ -13,6 +13,7 @@ namespace TestStudent.Pages
     {
         static StackPanel _stackPanel = null;
         static TextBox _textBox = null;
+        static Question _question = null;
 
         public PageCreateTest()
         {
@@ -75,6 +76,8 @@ namespace TestStudent.Pages
                 lbQuestionCount.Content = "Пока рано, выбрать еще " + (3 - PbFullComlete.Value);
                 return;
             }
+
+            btnEditQuestion.IsEnabled = true;
 
             // придумать способ достать кол-во записей по проще, не вытаскивая все записи из БД !!!!!!!!!!!!!!!!
             List<Question> questionsDB = MainWindow.db.GetQuestion();
@@ -158,50 +161,63 @@ namespace TestStudent.Pages
             List<Question> questions = MainWindow.db.GetQuestion();
 
             //List<Question> questions = questionsDB.FindAll(f =>
-                    //f.SubjectName == (string)lbChoiceValExpSubject.Content &&
-                    //f.SectionName == (string)lbChoiceValExpSection.Content &&
-                    //f.TestName == (string)lbChoiceValExpTest.Content);
+            //f.SubjectName == (string)lbChoiceValExpSubject.Content &&
+            //f.SectionName == (string)lbChoiceValExpSection.Content &&
+            //f.TestName == (string)lbChoiceValExpTest.Content);
 
-            if (true) //if (questions.Count != 0)
+            //_question = questions.Last();
+
+            ///////////////////////
+
+            if (questions.Count == 0)
+                return;
+
+            _question = questions.First();
+
+            tbQuestionText.Text = _question.QuestionText;
+            tbQuestionRating.Text = _question.QuestionRating;
+
+            var textBoxes = gcQuestionEdit.Children.OfType<TextBox>().ToList();
+            var checkBoxes = gcQuestionEdit.Children.OfType<CheckBox>().ToList();
+            var variant = _question.answerVariant;
+
+            for (int i = 0; i < variant.Count(); i++)
             {
-                tbQuestionText.Text = questions[0].QuestionText;
-                tbQuestionRating.Text = questions[0].QuestionRating;
-
-                var textBoxes = gcQuestionEdit.Children.OfType<TextBox>().ToList();
-                var checkBoxes = gcQuestionEdit.Children.OfType<CheckBox>().ToList();
-                var variant = questions[0].answerVariant;
-
-                for (int i = 0; i < variant.Count(); i++)
-                {
-                    textBoxes[i].Text = variant[i].Text;
-                    checkBoxes[i].IsEnabled = variant[i].IsRight;
-                }
+                textBoxes[i].Text = variant[i].Text;
+                checkBoxes[i].IsEnabled = variant[i].IsRight;
             }
-            else
-            {
-                Question newQuestion = new Question();
 
-                newQuestion.QuestionText = tbQuestionText.Text;
-                newQuestion.QuestionRating = tbQuestionRating.Text;
-
-                var textBoxes = gcQuestionEdit.Children.OfType<TextBox>().ToList();
-                var checkBoxes = gcQuestionEdit.Children.OfType<CheckBox>().ToList();
-
-                for (int i = 0; i < textBoxes.Count; i++)
-                {
-                    if (!string.IsNullOrEmpty(textBoxes[i].Text))
-                    {
-                        var newAnswerVariant = new AnswerVariant();
-                        newAnswerVariant.Text = textBoxes[i].Text;
-                        newAnswerVariant.IsRight = (bool)checkBoxes[i].IsChecked;
-                        newQuestion.answerVariant.Add(newAnswerVariant);
-                    }
-                }
-
-                MainWindow.db.AddQuestion(newQuestion);
-            }
+            ////////////////////
+            
 
             gbQuestionEdit.Visibility = Visibility.Visible;
+        }
+
+        private void ReadCurrentQuestion()
+        {
+            Question currentQuestion = new Question();
+
+            currentQuestion.SubjectName = (string)lbChoiceValExpSubject.Content;
+            currentQuestion.SectionName = lbChoiceValExpSection.Content.ToString();
+            currentQuestion.TestName = lbChoiceValExpTest.Content.ToString();
+
+            currentQuestion.QuestionText = tbQuestionText.Text;
+            currentQuestion.QuestionRating = tbQuestionRating.Text;
+
+            var textBoxes = gcQuestionEdit.Children.OfType<TextBox>().ToList();
+            var checkBoxes = gcQuestionEdit.Children.OfType<CheckBox>().ToList();
+
+            for (int i = 0; i < textBoxes.Count; i++)
+            {
+                if (!string.IsNullOrEmpty(textBoxes[i].Text))
+                {
+                    var newAnswerVariant = new AnswerVariant();
+                    newAnswerVariant.Text = textBoxes[i].Text;
+                    newAnswerVariant.IsRight = (bool)checkBoxes[i].IsChecked;
+                    currentQuestion.answerVariant.Add(newAnswerVariant);
+                }
+            }
+            _question = currentQuestion;
         }
 
         private StackPanel AddBlockEdit()
@@ -341,12 +357,12 @@ namespace TestStudent.Pages
 
         private void BtnQuestionSave_Click(object sender, RoutedEventArgs e)
         {
-
+            MainWindow.db.AddQuestion(_question);
         }
 
         private void BtnQuestionDelete_Click(object sender, RoutedEventArgs e)
         {
-
+            MainWindow.db.DeleteQuestion(_question);
         }
 
         private void BtnQuestionCancel_Click(object sender, RoutedEventArgs e)
