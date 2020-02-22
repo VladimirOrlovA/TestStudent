@@ -155,15 +155,53 @@ namespace TestStudent.Pages
 
         private void BtnEditQuestion_Click(object sender, RoutedEventArgs e)
         {
-            List<Question> questionsDB = MainWindow.db.GetQuestion();
+            List<Question> questions = MainWindow.db.GetQuestion();
 
-            List<Question> qq = questionsDB.FindAll(f => 
-                    f.SubjectName == (string)lbChoiceValExpSubject.Content &&
-                    f.SectionName == (string)lbChoiceValExpSection.Content &&
-                    f.TestName == (string)lbChoiceValExpTest.Content);
+            //List<Question> questions = questionsDB.FindAll(f =>
+                    //f.SubjectName == (string)lbChoiceValExpSubject.Content &&
+                    //f.SectionName == (string)lbChoiceValExpSection.Content &&
+                    //f.TestName == (string)lbChoiceValExpTest.Content);
 
+            if (true) //if (questions.Count != 0)
+            {
+                tbQuestionText.Text = questions[0].QuestionText;
+                tbQuestionRating.Text = questions[0].QuestionRating;
 
-            tbQuestionEdit.Visibility = Visibility.Visible;
+                var textBoxes = gcQuestionEdit.Children.OfType<TextBox>().ToList();
+                var checkBoxes = gcQuestionEdit.Children.OfType<CheckBox>().ToList();
+                var variant = questions[0].answerVariant;
+
+                for (int i = 0; i < variant.Count(); i++)
+                {
+                    textBoxes[i].Text = variant[i].Text;
+                    checkBoxes[i].IsEnabled = variant[i].IsRight;
+                }
+            }
+            else
+            {
+                Question newQuestion = new Question();
+
+                newQuestion.QuestionText = tbQuestionText.Text;
+                newQuestion.QuestionRating = tbQuestionRating.Text;
+
+                var textBoxes = gcQuestionEdit.Children.OfType<TextBox>().ToList();
+                var checkBoxes = gcQuestionEdit.Children.OfType<CheckBox>().ToList();
+
+                for (int i = 0; i < textBoxes.Count; i++)
+                {
+                    if (!string.IsNullOrEmpty(textBoxes[i].Text))
+                    {
+                        var newAnswerVariant = new AnswerVariant();
+                        newAnswerVariant.Text = textBoxes[i].Text;
+                        newAnswerVariant.IsRight = (bool)checkBoxes[i].IsChecked;
+                        newQuestion.answerVariant.Add(newAnswerVariant);
+                    }
+                }
+
+                MainWindow.db.AddQuestion(newQuestion);
+            }
+
+            gbQuestionEdit.Visibility = Visibility.Visible;
         }
 
         private StackPanel AddBlockEdit()

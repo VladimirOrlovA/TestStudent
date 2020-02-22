@@ -12,18 +12,17 @@ namespace DbOperation.lib
         public string SubjectName { get; set; }
         public string SectionName { get; set; }
         public string TestName { get; set; }
-        public string TestDescription { get; set; }
+        public string QuestionText { get; set; }
+        public string QuestionRating { get; set; }
 
-        public List<Answer> variant = new List<Answer>();
+        public List<AnswerVariant> answerVariant = new List<AnswerVariant>();
     }
 }
 
 
-public class Answer
+public class AnswerVariant
 {
     public int Id { get; set; }
     public string Text { get; set; }
     public bool IsRight { get; set; }
-    public int Rating { get; set; }
-
 }

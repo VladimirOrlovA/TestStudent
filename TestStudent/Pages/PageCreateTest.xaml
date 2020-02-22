@@ -59,84 +59,88 @@
 
             <Expander x:Name="expQuestion" Collapsed="ExpQuestion_Collapsed" 
                 Header="Вопросы теста" Grid.Row="4" Grid.ColumnSpan="2" Padding="10 10 0 0">
-                    <StackPanel  Orientation="Horizontal">
-                        <Label x:Name="lbQuestionCount" Width="250"/>
-                        <Button Content="Изменить" x:Name="btnEditQuestion" 
+                <StackPanel  Orientation="Horizontal">
+                    <Label x:Name="lbQuestionCount" Width="250"/>
+                    <Button Content="Изменить" x:Name="btnEditQuestion" 
                             Click="BtnEditQuestion_Click" Height="25" Width="100"  Margin="5 0"/>
-                    </StackPanel>
+                </StackPanel>
             </Expander>
 
             <StackPanel x:Name="spQuestion" Grid.Row="5" Grid.ColumnSpan="2" Margin="20 0">
-                
+
                 <Slider Value="10" Minimum="0" Maximum="30"
                         TickPlacement="BottomRight"
                         TickFrequency="1"
                         IsSnapToTickEnabled="True"
                         Height="30" Margin="10"/>
-
-                    <GroupBox x:Name="tbQuestionEdit" Header="Вопрос" 
+                
+                <GroupBox x:Name="gbQuestionEdit" Header="Вопрос" 
                               Grid.Row="5" Grid.ColumnSpan="2" Margin="10" Padding="10"
                               Visibility="Collapsed">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
+                    <Grid x:Name="gcQuestionEdit">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.1*"></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            
-                            <TextBox Grid.Row="1" Grid.ColumnSpan="2" TextWrapping="Wrap"/>
-                            <Label Grid.Row="2" Grid.Column="0">Ответ</Label>
-                            <Label Grid.Row="2" Grid.Column="1">Вариант</Label>
-                            <CheckBox Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
-                            <CheckBox Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
-                            <CheckBox Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
-                            <CheckBox Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
-                            <CheckBox Grid.Row="7" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
 
-                            <TextBox Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" Margin="5"/>
-                            <TextBox Grid.Row="4" Grid.Column="1" TextWrapping="Wrap" Margin="5"/>
-                            <TextBox Grid.Row="5" Grid.Column="1" TextWrapping="Wrap" Margin="5"/>
-                            <TextBox Grid.Row="6" Grid.Column="1" TextWrapping="Wrap" Margin="5"/>
-                            <TextBox Grid.Row="7" Grid.Column="1" TextWrapping="Wrap" Margin="5"/>
+                        <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
+                            <TextBox x:Name="tbQuestionText"  TextWrapping="Wrap"/>
+                            <TextBox x:Name="tbQuestionRating"  TextWrapping="Wrap"/>
+                        </StackPanel>
+                        
+                        <Label Grid.Row="2" Grid.Column="0">Ответ</Label>
+                        <Label Grid.Row="2" Grid.Column="1">Вариант</Label>
+                        <CheckBox Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                        <CheckBox Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                        <CheckBox Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                        <CheckBox Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                        <CheckBox Grid.Row="7" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
 
-                            <StackPanel Grid.Row="8" Grid.ColumnSpan="2"
+                        <TextBox Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" Margin="5"/>
+                        <TextBox Grid.Row="4" Grid.Column="1" TextWrapping="Wrap" Margin="5"/>
+                        <TextBox Grid.Row="5" Grid.Column="1" TextWrapping="Wrap" Margin="5"/>
+                        <TextBox Grid.Row="6" Grid.Column="1" TextWrapping="Wrap" Margin="5"/>
+                        <TextBox Grid.Row="7" Grid.Column="1" TextWrapping="Wrap" Margin="5"/>
+
+                        <StackPanel Grid.Row="8" Grid.ColumnSpan="2"
                                         HorizontalAlignment="Center"
                                         Orientation="Horizontal">
-                                <Button Width="100" Margin="20 5" x:Name="btnQuestionSave"
+                            <Button Width="100" Margin="20 5" x:Name="btnQuestionSave"
                                         Click="BtnQuestionSave_Click">Сохранить</Button>
-                                <Button Width="100" Margin="20 5" Content="Удалить" x:Name="btnQuestionDelete" 
+                            <Button Width="100" Margin="20 5" Content="Удалить" x:Name="btnQuestionDelete" 
                                         Click="BtnQuestionDelete_Click"/>
-                                <Button Width="100" Margin="20 5" x:Name="btnQuestionCancel"
+                            <Button Width="100" Margin="20 5" x:Name="btnQuestionCancel"
                                         Click="BtnQuestionCancel_Click">Отмена</Button>
-                            </StackPanel>
-
-                        </Grid>
-                    </GroupBox>
-
-                    <GroupBox x:Name="tbQuestionView" Header="Вопрос" Height="150" Grid.Row="5" Grid.ColumnSpan="2" Margin="10"
-                              Visibility="Collapsed">
-                        <StackPanel>
-                            <Label>dsdsdsdssdssdsddsdsdsd dfdfdsds</Label>
-                            <CheckBox>fdfdfd</CheckBox>
-                            <CheckBox>fdfdfd</CheckBox>
-                            <CheckBox>fdfdfd</CheckBox>
-                            <CheckBox>fdfdfd</CheckBox>
                         </StackPanel>
-                    </GroupBox>
-                    
+
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox x:Name="gbQuestionView" Header="Вопрос" Height="150" Grid.Row="5" Grid.ColumnSpan="2" Margin="10"
+                              Visibility="Collapsed">
+                    <StackPanel>
+                        <Label>dsdsdsdssdssdsddsdsdsd dfdfdsds</Label>
+                        <CheckBox>fdfdfd</CheckBox>
+                        <CheckBox>fdfdfd</CheckBox>
+                        <CheckBox>fdfdfd</CheckBox>
+                        <CheckBox>fdfdfd</CheckBox>
+                    </StackPanel>
+                </GroupBox>
+
             </StackPanel>
-            
+
             <Label x:Name="lbChoiceValExpQuestion" Content="" Grid.Row="4" Grid.Column="1" Padding="10"/>
         </Grid>
     </ScrollViewer>
