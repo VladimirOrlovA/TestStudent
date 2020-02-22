@@ -14,6 +14,7 @@ namespace TestStudent.Pages
         static StackPanel _stackPanel = null;
         static TextBox _textBox = null;
         static Question _question = null;
+        static int _questionNumber = 0;
 
         public PageCreateTest()
         {
@@ -158,6 +159,26 @@ namespace TestStudent.Pages
 
         private void BtnEditQuestion_Click(object sender, RoutedEventArgs e)
         {
+
+        }
+
+        private void SliderQuestionNumber_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            _questionNumber = (int)((Slider)sender).Value;
+            GetQuestionBox();
+        }
+
+        private void ExpQuestion_Expanded(object sender, RoutedEventArgs e)
+        {
+            List<Question> questions = MainWindow.db.GetQuestion();
+            sliderQuestionNumber.Value = 0;
+            sliderQuestionNumber.Maximum = questions.Count() - 1;
+            sliderQuestionNumber.Visibility = Visibility.Visible;
+            GetQuestionBox();
+        }
+
+        private void GetQuestionBox()
+        {
             List<Question> questions = MainWindow.db.GetQuestion();
 
             // выборка из коллекции согласно выбора пользователя
@@ -168,11 +189,10 @@ namespace TestStudent.Pages
 
             //_question = questions.Last();
 
-            ///////////////////////
-
             if (questions.Count != 0)
             {
-                _question = questions[0];
+                _question = questions[_questionNumber];
+                gbQuestionEdit.Header = "Вопрос " + (_questionNumber+1);
             }
             else
             {
@@ -192,9 +212,6 @@ namespace TestStudent.Pages
                 checkBoxes[i].IsEnabled = variant[i].IsRight;
                 checkBoxes[i].IsChecked = variant[i].IsRight;
             }
-
-            ////////////////////
-            
 
             gbQuestionEdit.Visibility = Visibility.Visible;
         }
@@ -378,5 +395,6 @@ namespace TestStudent.Pages
         {
 
         }
+
     }
 }

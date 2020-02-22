@@ -57,7 +57,7 @@
             </Expander>
             <Label x:Name="lbChoiceValExpTest" Content="" Grid.Row="3" Grid.Column="1" Padding="10"/>
 
-            <Expander x:Name="expQuestion" Collapsed="ExpQuestion_Collapsed" 
+            <Expander x:Name="expQuestion" Collapsed="ExpQuestion_Collapsed" Expanded="ExpQuestion_Expanded"
                 Header="Вопросы теста" Grid.Row="4" Grid.ColumnSpan="2" Padding="10 10 0 0">
                 <StackPanel  Orientation="Horizontal">
                     <Label x:Name="lbQuestionCount" Content="Пока рано, выбрать еще 3" Width="250"/>
@@ -68,13 +68,15 @@
 
             <StackPanel x:Name="spQuestion" Grid.Row="5" Grid.ColumnSpan="2" Margin="20 0">
 
-                <Slider Value="10" Minimum="0" Maximum="30"
+                <Slider x:Name="sliderQuestionNumber" ValueChanged="SliderQuestionNumber_ValueChanged"
+                        Value="0" Minimum="0" Maximum="30"
                         TickPlacement="BottomRight"
                         TickFrequency="1"
                         IsSnapToTickEnabled="True"
-                        Height="30" Margin="10"/>
+                        Height="30" Margin="10"
+                        Visibility="Collapsed"/>
                 
-                <GroupBox x:Name="gbQuestionEdit" Header="Вопрос" 
+                <GroupBox x:Name="gbQuestionEdit" Header="Вопрос " 
                               Grid.Row="5" Grid.ColumnSpan="2" Margin="10" Padding="10"
                               Visibility="Collapsed">
                     <Grid x:Name="gcQuestionEdit">
