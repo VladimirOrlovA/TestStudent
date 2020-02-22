@@ -191,18 +191,28 @@ namespace DbOperation.lib
             }
         }
 
-        public string AddQuestion(Question obj)
+        public string AddQuestion(Question question)
         {
             try
             {
                 using (var ldb = new LiteDatabase(Path))
                 {
-                    var objects = ldb.GetCollection<Question>("Question");
+                    var questions = ldb.GetCollection<Question>("Question");
 
-                    Question searchObj = objects.FindOne(f => f.Id == obj.Id);
+                    Question searchObj = questions.FindOne(f => f.Id == question.Id);
 
                     if (searchObj == null)
-                        objects.Insert(obj);
+                    {
+                        questions.Insert(question);
+
+                        var answerVariant = ldb.GetCollection<AnswerVariant>("AnswerVariant");
+                        foreach (AnswerVariant variant in question.answerVariant)
+                        {
+                            variant.QuestionId = question.Id;
+                            answerVariant.Insert(variant);
+                        }
+                    }
+                        
                     else
                         return "Такая запись уже существует";
                 }
@@ -249,16 +259,26 @@ namespace DbOperation.lib
 
             return objects;
         }
+
         public List<Question> GetQuestion()
         {
-            List<Question> objects = null;
+            List<Question> questions = null;
 
             using (var ldb = new LiteDatabase(Path))
             {
-                objects = ldb.GetCollection<Question>("Question").FindAll().ToList();
+                questions = ldb.GetCollection<Question>("Question").FindAll().ToList();
+
+                foreach(Question question in questions)
+                {
+                    var variants = ldb.GetCollection<AnswerVariant>("AnswerVariant").FindAll().ToList();
+                    foreach (var variant in variants)
+                    {
+                        question.answerVariant.Add(variant);
+                    }
+                }
             }
 
-            return objects;
+            return questions;
         }
 
         public Subject GetSubjectById(int subjectId)

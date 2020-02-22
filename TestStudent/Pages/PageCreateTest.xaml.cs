@@ -160,6 +160,7 @@ namespace TestStudent.Pages
         {
             List<Question> questions = MainWindow.db.GetQuestion();
 
+            // выборка из коллекции согласно выбора пользователя
             //List<Question> questions = questionsDB.FindAll(f =>
             //f.SubjectName == (string)lbChoiceValExpSubject.Content &&
             //f.SectionName == (string)lbChoiceValExpSection.Content &&
@@ -169,10 +170,14 @@ namespace TestStudent.Pages
 
             ///////////////////////
 
-            if (questions.Count == 0)
-                return;
-
-            _question = questions.First();
+            if (questions.Count != 0)
+            {
+                _question = questions.First();
+            }
+            else
+            {
+                ReadCurrentQuestion();
+            }
 
             tbQuestionText.Text = _question.QuestionText;
             tbQuestionRating.Text = _question.QuestionRating;
@@ -185,6 +190,7 @@ namespace TestStudent.Pages
             {
                 textBoxes[i].Text = variant[i].Text;
                 checkBoxes[i].IsEnabled = variant[i].IsRight;
+                checkBoxes[i].IsChecked = variant[i].IsRight;
             }
 
             ////////////////////
@@ -357,6 +363,7 @@ namespace TestStudent.Pages
 
         private void BtnQuestionSave_Click(object sender, RoutedEventArgs e)
         {
+            ReadCurrentQuestion();
             MainWindow.db.AddQuestion(_question);
         }
 
