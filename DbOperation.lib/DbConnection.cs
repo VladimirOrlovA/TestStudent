@@ -206,13 +206,25 @@ namespace DbOperation.lib
                         questions.Insert(question);
 
                         var answerVariant = ldb.GetCollection<AnswerVariant>("AnswerVariant");
+
                         foreach (AnswerVariant variant in question.answerVariant)
                         {
                             variant.QuestionId = question.Id;
                             answerVariant.Insert(variant);
+
+                            //if (variant.QuestionId != 0)
+                            //{
+                            //    variant.QuestionId = question.Id;
+                            //    answerVariant.Insert(variant);
+                            //}
+                            //else
+                            //{
+                            //    answerVariant.Update(variant);
+                            //}
+
                         }
                     }
-                        
+
                     else
                         return "Такая запись уже существует";
                 }
@@ -268,12 +280,13 @@ namespace DbOperation.lib
             {
                 questions = ldb.GetCollection<Question>("Question").FindAll().ToList();
 
-                foreach(Question question in questions)
+                foreach (Question question in questions)
                 {
                     var variants = ldb.GetCollection<AnswerVariant>("AnswerVariant").FindAll().ToList();
                     foreach (var variant in variants)
                     {
-                        question.answerVariant.Add(variant);
+                        if (variant.QuestionId == question.Id)
+                            question.answerVariant.Add(variant);
                     }
                 }
             }

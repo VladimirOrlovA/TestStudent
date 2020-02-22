@@ -172,7 +172,7 @@ namespace TestStudent.Pages
 
             if (questions.Count != 0)
             {
-                _question = questions.First();
+                _question = questions[0];
             }
             else
             {
@@ -365,11 +365,13 @@ namespace TestStudent.Pages
         {
             ReadCurrentQuestion();
             MainWindow.db.AddQuestion(_question);
+            MessageBox.Show("Сохранено " + _question.Id);
         }
 
         private void BtnQuestionDelete_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.db.DeleteQuestion(_question);
+            MessageBox.Show("Удалено " + _question.Id);
         }
 
         private void BtnQuestionCancel_Click(object sender, RoutedEventArgs e)
