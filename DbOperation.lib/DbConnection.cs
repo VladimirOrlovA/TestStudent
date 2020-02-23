@@ -211,17 +211,6 @@ namespace DbOperation.lib
                         {
                             variant.QuestionId = question.Id;
                             answerVariant.Insert(variant);
-
-                            //if (variant.QuestionId != 0)
-                            //{
-                            //    variant.QuestionId = question.Id;
-                            //    answerVariant.Insert(variant);
-                            //}
-                            //else
-                            //{
-                            //    answerVariant.Update(variant);
-                            //}
-
                         }
                     }
 
@@ -282,10 +271,10 @@ namespace DbOperation.lib
 
                 foreach (Question question in questions)
                 {
-                    var variants = ldb.GetCollection<AnswerVariant>("AnswerVariant").FindAll().ToList();
+                    var variants = ldb.GetCollection<AnswerVariant>("AnswerVariant").Find(f => f.QuestionId == question.Id).ToList();
                     foreach (var variant in variants)
                     {
-                        if (variant.QuestionId == question.Id)
+                        //if (variant.QuestionId == question.Id)
                             question.answerVariant.Add(variant);
                     }
                 }

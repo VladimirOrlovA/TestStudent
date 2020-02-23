@@ -13,8 +13,12 @@ namespace TestStudent.Pages
     {
         static StackPanel _stackPanel = null;
         static TextBox _textBox = null;
+
+        static List<Question> _questions = null;
         static Question _question = null;
         static int _questionNumber = 0;
+
+        static bool _newQuestionFlag = false;
 
         public PageCreateTest()
         {
@@ -157,9 +161,11 @@ namespace TestStudent.Pages
             _stackPanel.Children.Add(AddBlockEdit());
         }
 
-        private void BtnEditQuestion_Click(object sender, RoutedEventArgs e)
+        private void BtnAddQuestion_Click(object sender, RoutedEventArgs e)
         {
-
+            _newQuestionFlag = true;
+            ReadCurrentQuestion();
+            GetQuestionBox();
         }
 
         private void SliderQuestionNumber_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -170,16 +176,9 @@ namespace TestStudent.Pages
 
         private void ExpQuestion_Expanded(object sender, RoutedEventArgs e)
         {
-            List<Question> questions = MainWindow.db.GetQuestion();
-            sliderQuestionNumber.Value = 0;
-            sliderQuestionNumber.Maximum = questions.Count() - 1;
-            sliderQuestionNumber.Visibility = Visibility.Visible;
-            GetQuestionBox();
-        }
+            if (PbFullComlete.Value < 3) return;
 
-        private void GetQuestionBox()
-        {
-            List<Question> questions = MainWindow.db.GetQuestion();
+            _questions = MainWindow.db.GetQuestion();
 
             // выборка из коллекции согласно выбора пользователя
             //List<Question> questions = questionsDB.FindAll(f =>
@@ -187,16 +186,25 @@ namespace TestStudent.Pages
             //f.SectionName == (string)lbChoiceValExpSection.Content &&
             //f.TestName == (string)lbChoiceValExpTest.Content);
 
-            //_question = questions.Last();
+            sliderQuestionNumber.Value = 0;
+            if (_questions.Count() != 0)
+            sliderQuestionNumber.Maximum = _questions.Count() - 1;
+            sliderQuestionNumber.Visibility = Visibility.Visible;
+            GetQuestionBox();
+        }
 
-            if (questions.Count != 0)
+        private void GetQuestionBox()
+        {
+            if (_questions.Count != 0 && !_newQuestionFlag)
             {
-                _question = questions[_questionNumber];
+                _question = _questions[_questionNumber];
                 gbQuestionEdit.Header = "Вопрос " + (_questionNumber+1);
             }
             else
             {
-                ReadCurrentQuestion();
+                _question = new Question();
+                gbQuestionEdit.Header = "Вопрос - Новый";
+                _newQuestionFlag = false;
             }
 
             tbQuestionText.Text = _question.QuestionText;
@@ -206,12 +214,25 @@ namespace TestStudent.Pages
             var checkBoxes = gcQuestionEdit.Children.OfType<CheckBox>().ToList();
             var variant = _question.answerVariant;
 
-            for (int i = 0; i < variant.Count(); i++)
+            // Если добавляем новый вопрос (откр чистую форму) то просто пробегаемся по полям и пишем в них ноль
+            if (variant.Count() != 0)
             {
-                textBoxes[i].Text = variant[i].Text;
-                checkBoxes[i].IsEnabled = variant[i].IsRight;
-                checkBoxes[i].IsChecked = variant[i].IsRight;
+                for (int i = 0; i < 5; i++)
+                {
+                     try { textBoxes[i].Text = variant[i].Text; } catch { textBoxes[i].Text = null; };
+                    try { checkBoxes[i].IsChecked = variant[i].IsRight; } catch { checkBoxes[i].IsChecked = false; }
+                }
             }
+            else
+            {
+                for (int i = 0; i < textBoxes.Count(); i++)
+                {
+                    textBoxes[i].Text = null;
+                    checkBoxes[i].IsChecked = false;
+                }
+            }
+
+
 
             gbQuestionEdit.Visibility = Visibility.Visible;
         }
@@ -220,6 +241,7 @@ namespace TestStudent.Pages
         {
             Question currentQuestion = new Question();
 
+            currentQuestion.Id = _question.Id;
             currentQuestion.SubjectName = (string)lbChoiceValExpSubject.Content;
             currentQuestion.SectionName = lbChoiceValExpSection.Content.ToString();
             currentQuestion.TestName = lbChoiceValExpTest.Content.ToString();
@@ -234,10 +256,10 @@ namespace TestStudent.Pages
             {
                 if (!string.IsNullOrEmpty(textBoxes[i].Text))
                 {
-                    var newAnswerVariant = new AnswerVariant();
-                    newAnswerVariant.Text = textBoxes[i].Text;
-                    newAnswerVariant.IsRight = (bool)checkBoxes[i].IsChecked;
-                    currentQuestion.answerVariant.Add(newAnswerVariant);
+                    var currentAnswerVariant = new AnswerVariant();
+                    currentAnswerVariant.Text = textBoxes[i].Text;
+                    currentAnswerVariant.IsRight = (bool)checkBoxes[i].IsChecked;
+                    currentQuestion.answerVariant.Add(currentAnswerVariant);
                 }
             }
             _question = currentQuestion;
@@ -381,14 +403,15 @@ namespace TestStudent.Pages
         private void BtnQuestionSave_Click(object sender, RoutedEventArgs e)
         {
             ReadCurrentQuestion();
-            MainWindow.db.AddQuestion(_question);
-            MessageBox.Show("Сохранено " + _question.Id);
+            string errMes = MainWindow.db.AddQuestion(_question);
+            MessageBox.Show("Сохранение вопроса с id - " + _question.Id + "\n" + errMes);
         }
 
         private void BtnQuestionDelete_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.db.DeleteQuestion(_question);
-            MessageBox.Show("Удалено " + _question.Id);
+            //ReadCurrentQuestion();
+            string errMes = MainWindow.db.DeleteQuestion(_question);
+            MessageBox.Show("Удаление вопроса с id - " + _question.Id + "\n" + errMes);
         }
 
         private void BtnQuestionCancel_Click(object sender, RoutedEventArgs e)
