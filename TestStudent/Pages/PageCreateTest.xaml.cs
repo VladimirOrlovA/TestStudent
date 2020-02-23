@@ -188,7 +188,7 @@ namespace TestStudent.Pages
 
             sliderQuestionNumber.Value = 0; 
             if (_questions.Count() != 0)
-            sliderQuestionNumber.Maximum = _questions.Count() - 1;
+            sliderQuestionNumber.Maximum = _questions.Count() - 1; 
             sliderQuestionNumber.Visibility = Visibility.Visible;
             GetQuestionBox();
         }
