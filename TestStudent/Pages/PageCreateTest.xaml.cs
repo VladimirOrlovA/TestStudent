@@ -186,7 +186,7 @@ namespace TestStudent.Pages
             //f.SectionName == (string)lbChoiceValExpSection.Content &&
             //f.TestName == (string)lbChoiceValExpTest.Content);
 
-            sliderQuestionNumber.Value = 0;
+            sliderQuestionNumber.Value = 0; 
             if (_questions.Count() != 0)
             sliderQuestionNumber.Maximum = _questions.Count() - 1;
             sliderQuestionNumber.Visibility = Visibility.Visible;
