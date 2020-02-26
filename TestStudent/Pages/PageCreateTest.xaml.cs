@@ -32,6 +32,7 @@ namespace TestStudent.Pages
             }
         }
 
+        // для закрытия всех открытых экспандеров
         private void Item_Expanded(object sender, RoutedEventArgs e)
         {
             var obj = mainGridCont.Children.OfType<Expander>();
@@ -42,29 +43,37 @@ namespace TestStudent.Pages
                     item.IsExpanded = false;
             }
         }
+
+        // запись сделаного выбора в экспандере Предмет
         private void ExpSubject_Collapsed(object sender, RoutedEventArgs e)
         {
             lbChoiceValExpSubject.Content = GetValRadioButton(spExpSubject.Children);
             LabelChoiceCheck();
         }
 
+        // запись сделаного выбора в экспандере Раздел
         private void ExpSection_Collapsed(object sender, RoutedEventArgs e)
         {
             lbChoiceValExpSection.Content = GetValRadioButton(spExpSection.Children);
             LabelChoiceCheck();
         }
 
+        // запись сделаного выбора в экспандере Название теста
         private void ExpTest_Collapsed(object sender, RoutedEventArgs e)
         {
             lbChoiceValExpTest.Content = GetValRadioButton(spExpTest.Children);
             LabelChoiceCheck();
         }
 
+
         private void ExpQuestion_Collapsed(object sender, RoutedEventArgs e)
         {
             LabelChoiceCheck();
+            sliderQuestionNumber.Visibility = Visibility.Collapsed;
+            gbQuestionEdit.Visibility = Visibility.Collapsed;
         }
 
+        // проверка сделан ли выбор раздела
         private void LabelChoiceCheck()
         {
             int countChoised = 0;
@@ -82,12 +91,8 @@ namespace TestStudent.Pages
                 return;
             }
 
-            btnEditQuestion.IsEnabled = true;
-
-            // придумать способ достать кол-во записей по проще, не вытаскивая все записи из БД !!!!!!!!!!!!!!!!
-            List<Question> questionsDB = MainWindow.db.GetQuestion();
-            lbQuestionCount.Content = "Вопросов в тесте " + questionsDB.Count();
-            lbChoiceValExpQuestion.Content = lbQuestionCount.Content;
+            FillContentFromDbQuestions();
+            btnEditQuestion.Visibility = Visibility.Visible;
         }
 
         private string GetValRadioButton(UIElementCollection uIElementCollection)
@@ -140,6 +145,31 @@ namespace TestStudent.Pages
             }
         }
 
+        private void FillContentFromDbQuestions()
+        {
+            var questionsDB = MainWindow.db.GetQuestion();
+
+            //выборка из коллекции согласно выбора пользователя
+            List<Question> questions = questionsDB.FindAll(f =>
+            f.SubjectName == (string)lbChoiceValExpSubject.Content &&
+            f.SectionName == (string)lbChoiceValExpSection.Content &&
+            f.TestName == (string)lbChoiceValExpTest.Content);
+
+            if (questions.Count != 0)
+            {
+                lbQuestionCount.Content = "Вопросов в тесте " + questions.Count();
+                lbChoiceValExpQuestion.Content = lbQuestionCount.Content;
+            }
+
+            _questions = questions;
+
+            sliderQuestionNumber.Value = 0;
+            if (_questions.Count() != 0)
+                sliderQuestionNumber.Maximum = _questions.Count() - 1;
+            sliderQuestionNumber.Visibility = Visibility.Visible;
+            GetQuestionBox();
+        }
+
         private void BtnEditSubject_Click(object sender, RoutedEventArgs e)
         {
             _stackPanel = spExpSubject;
@@ -177,20 +207,8 @@ namespace TestStudent.Pages
         private void ExpQuestion_Expanded(object sender, RoutedEventArgs e)
         {
             if (PbFullComlete.Value < 3) return;
+            gbQuestionEdit.Visibility = Visibility.Visible;
 
-            _questions = MainWindow.db.GetQuestion();
-
-            // выборка из коллекции согласно выбора пользователя
-            //List<Question> questions = questionsDB.FindAll(f =>
-            //f.SubjectName == (string)lbChoiceValExpSubject.Content &&
-            //f.SectionName == (string)lbChoiceValExpSection.Content &&
-            //f.TestName == (string)lbChoiceValExpTest.Content);
-
-            sliderQuestionNumber.Value = 0; 
-            if (_questions.Count() != 0)
-            sliderQuestionNumber.Maximum = _questions.Count() - 1; 
-            sliderQuestionNumber.Visibility = Visibility.Visible;
-            GetQuestionBox();
         }
 
         private void GetQuestionBox()
@@ -232,9 +250,7 @@ namespace TestStudent.Pages
                 }
             }
 
-
-
-            gbQuestionEdit.Visibility = Visibility.Visible;
+            //gbQuestionEdit.Visibility = Visibility.Visible;
         }
 
         private void ReadCurrentQuestion()

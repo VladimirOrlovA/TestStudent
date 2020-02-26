@@ -61,7 +61,7 @@
                 Header="Вопросы теста" Grid.Row="4" Grid.ColumnSpan="2" Padding="10 10 0 0">
                 <StackPanel  Orientation="Horizontal">
                     <Label x:Name="lbQuestionCount" Content="Пока рано, выбрать еще 3" Width="250"/>
-                    <Button Content="Добавить" x:Name="btnEditQuestion" IsEnabled="False"
+                    <Button Content="Добавить" x:Name="btnEditQuestion" Visibility="Hidden"
                             Click="BtnAddQuestion_Click" Height="25" Width="100"  Margin="5 0"/>
                 </StackPanel>
             </Expander>
@@ -69,7 +69,7 @@
             <StackPanel x:Name="spQuestion" Grid.Row="5" Grid.ColumnSpan="2" Margin="20 0">
 
                 <Slider x:Name="sliderQuestionNumber" ValueChanged="SliderQuestionNumber_ValueChanged"
-                        Value="0" Minimum="0" Maximum="30"
+                        Value="0" Minimum="0" Maximum="0"
                         TickPlacement="BottomRight"
                         TickFrequency="1"
                         IsSnapToTickEnabled="True"
